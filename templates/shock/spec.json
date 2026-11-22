@@ -1,0 +1,356 @@
+{
+ "name": "HUMMER Shock Absorber",
+ "size": [
+  1024,
+  1536
+ ],
+ "images": [
+  {
+   "slot": "product",
+   "box": [
+    93,
+    462,
+    835,
+    228
+   ]
+  },
+  {
+   "slot": "product",
+   "box": [
+    749,
+    810,
+    74,
+    384
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "field": "name_fa",
+   "style": "fa",
+   "box": [
+    825,
+    325,
+    176,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    35,
+    272,
+    278,
+    54
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "field": "name_en",
+   "style": "bold",
+   "box": [
+    834,
+    273,
+    169,
+    34
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "shock_absorber_design",
+   "style": "cond",
+   "box": [
+    404,
+    883,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "mounting_1",
+   "style": "cond",
+   "box": [
+    405,
+    922,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "mounting_2",
+   "style": "cond",
+   "box": [
+    406,
+    961,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "mounting_2",
+   "style": "cond",
+   "box": [
+    365,
+    716,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "mounting_1",
+   "style": "cond",
+   "box": [
+    114,
+    716,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "shock_absorber_system",
+   "style": "cond",
+   "box": [
+    407,
+    1000,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "shock_absorber_system",
+   "style": "cond",
+   "box": [
+    852,
+    726,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "length_2|max_length",
+   "style": "cond",
+   "box": [
+    408,
+    1039,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "bore_diameter",
+   "style": "cond",
+   "box": [
+    408,
+    1078,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "piston_rod_diameter",
+   "style": "cond",
+   "box": [
+    409,
+    1117,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "weight",
+   "style": "cond",
+   "box": [
+    433,
+    1156,
+    80,
+    21
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "piston_rod_diameter",
+   "style": "cond",
+   "box": [
+    889,
+    809,
+    80,
+    21
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "bore_diameter",
+   "style": "cond",
+   "box": [
+    899,
+    1143,
+    80,
+    21
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "length_2|max_length",
+   "style": "cond",
+   "box": [
+    669,
+    982,
+    80,
+    21
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "shock_absorber_type",
+   "style": "reg",
+   "box": [
+    398,
+    848,
+    119,
+    18
+   ],
+   "color": [
+    16,
+    23,
+    53
+   ],
+   "align": "left",
+   "cap": 18,
+   "base_y": 866
+  },
+  {
+   "field": "packaging_length",
+   "style": "reg",
+   "box": [
+    816,
+    1260,
+    64,
+    18
+   ],
+   "color": [
+    9,
+    31,
+    81
+   ],
+   "align": "left",
+   "cap": 18,
+   "base_y": 1278
+  },
+  {
+   "field": "packaging_width",
+   "style": "reg",
+   "box": [
+    818,
+    1294,
+    62,
+    18
+   ],
+   "color": [
+    9,
+    39,
+    85
+   ],
+   "align": "left",
+   "cap": 18,
+   "base_y": 1312
+  },
+  {
+   "field": "packaging_height",
+   "style": "reg",
+   "box": [
+    816,
+    1329,
+    73,
+    18
+   ],
+   "color": [
+    8,
+    15,
+    54
+   ],
+   "align": "left",
+   "cap": 18,
+   "base_y": 1347
+  }
+ ]
+}

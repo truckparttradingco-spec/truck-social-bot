@@ -1,0 +1,144 @@
+{
+ "name": "HUMMER Brake Adjuster",
+ "size": [
+  1024,
+  1536
+ ],
+ "images": [
+  {
+   "slot": "product",
+   "box": [
+    36,
+    279,
+    549,
+    543
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "field": "weight",
+   "style": "cond",
+   "box": [
+    811,
+    1027,
+    143,
+    56
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "number_of_holes",
+   "style": "cond",
+   "box": [
+    434,
+    1180,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "number_of_teeth",
+   "style": "cond",
+   "box": [
+    434,
+    1003,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "bore_diameter",
+   "style": "cond",
+   "box": [
+    432,
+    1068,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "operating_mode",
+   "style": "cond",
+   "box": [
+    434,
+    1124,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    733,
+    244,
+    278,
+    54
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    730,
+    474,
+    118,
+    112
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ],
+   "fit": 1.0,
+   "rotate": -42.3,
+   "cap": 30,
+   "length": 147
+  },
+  {
+   "field": "name_fa",
+   "style": "fa",
+   "box": [
+    784,
+    314,
+    226,
+    44
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  }
+ ]
+}

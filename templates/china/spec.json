@@ -1,0 +1,107 @@
+{
+ "name": "ORGINAL Chinese Truck Caliper",
+ "size": [
+  1024,
+  1536
+ ],
+ "images": [
+  {
+   "slot": "product",
+   "box": [
+    430,
+    334,
+    437,
+    317
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    728,
+    280,
+    278,
+    54
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "field": "name_fa",
+   "style": "fa",
+   "box": [
+    777,
+    351,
+    226,
+    44
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "packaging_length",
+   "style": "reg",
+   "box": [
+    780,
+    1186,
+    92,
+    21
+   ],
+   "color": [
+    7,
+    25,
+    92
+   ],
+   "align": "left",
+   "cap": 21,
+   "base_y": 1207,
+   "default": "As per Product"
+  },
+  {
+   "field": "packaging_width",
+   "style": "reg",
+   "box": [
+    778,
+    1223,
+    174,
+    26
+   ],
+   "color": [
+    7,
+    28,
+    98
+   ],
+   "align": "left",
+   "cap": 21,
+   "base_y": 1244,
+   "default": "As per Product"
+  },
+  {
+   "field": "packaging_height",
+   "style": "reg",
+   "box": [
+    778,
+    1260,
+    174,
+    26
+   ],
+   "color": [
+    7,
+    30,
+    103
+   ],
+   "align": "left",
+   "cap": 21,
+   "base_y": 1281,
+   "default": "As per Product"
+  }
+ ]
+}

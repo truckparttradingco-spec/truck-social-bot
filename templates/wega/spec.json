@@ -1,0 +1,328 @@
+{
+ "name": "WEGA Suspension",
+ "size": [
+  1024,
+  1536
+ ],
+ "images": [
+  {
+   "slot": "product",
+   "box": [
+    350,
+    425,
+    650,
+    225
+   ]
+  },
+  {
+   "slot": "product",
+   "box": [
+    750,
+    776,
+    113,
+    375
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "field": "pin_diameter",
+   "style": "cond",
+   "box": [
+    415,
+    1134,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "length_2|max_length",
+   "style": "cond",
+   "box": [
+    414,
+    1101,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "mounting_2",
+   "style": "cond",
+   "box": [
+    410,
+    909,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "bore_diameter",
+   "style": "cond",
+   "box": [
+    412,
+    976,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "bore_diameter",
+   "style": "cond",
+   "box": [
+    896,
+    771,
+    88,
+    16
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "length_2|max_length",
+   "style": "cond",
+   "box": [
+    672,
+    959,
+    88,
+    16
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "spring_design",
+   "style": "cond",
+   "box": [
+    412,
+    1009,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "supplementary_article_supplementary_info",
+   "style": "cond",
+   "box": [
+    413,
+    1055,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "weight",
+   "style": "cond",
+   "box": [
+    411,
+    947,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "mounting_1",
+   "style": "cond",
+   "box": [
+    409,
+    871,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "shock_absorber_system",
+   "style": "cond",
+   "box": [
+    408,
+    833,
+    120,
+    20
+   ],
+   "color": [
+    1,
+    40,
+    78
+   ]
+  },
+  {
+   "field": "name_en",
+   "style": "bold",
+   "box": [
+    846,
+    238,
+    169,
+    34
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "name_fa",
+   "style": "fa",
+   "box": [
+    839,
+    280,
+    176,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    34,
+    548,
+    278,
+    54
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    111,
+    315,
+    23,
+    108
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ],
+   "rotate": -90,
+   "fit": 1.15
+  },
+  {
+   "field": "shock_absorber_type",
+   "style": "reg",
+   "box": [
+    404,
+    805,
+    128,
+    18
+   ],
+   "color": [
+    10,
+    37,
+    89
+   ],
+   "align": "left",
+   "cap": 18,
+   "base_y": 823
+  },
+  {
+   "field": "packaging_length",
+   "style": "reg",
+   "box": [
+    835,
+    1228,
+    80,
+    19
+   ],
+   "color": [
+    10,
+    38,
+    90
+   ],
+   "align": "left",
+   "cap": 19,
+   "base_y": 1247
+  },
+  {
+   "field": "packaging_width",
+   "style": "reg",
+   "box": [
+    835,
+    1262,
+    59,
+    19
+   ],
+   "color": [
+    13,
+    46,
+    99
+   ],
+   "align": "left",
+   "cap": 19,
+   "base_y": 1281
+  },
+  {
+   "field": "packaging_height",
+   "style": "reg",
+   "box": [
+    835,
+    1296,
+    79,
+    19
+   ],
+   "color": [
+    8,
+    39,
+    94
+   ],
+   "align": "left",
+   "cap": 19,
+   "base_y": 1315
+  }
+ ]
+}

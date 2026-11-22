@@ -1,0 +1,144 @@
+{
+ "name": "NOK Oil Seal",
+ "size": [
+  1024,
+  1535
+ ],
+ "images": [
+  {
+   "slot": "product",
+   "box": [
+    570,
+    464,
+    378,
+    362
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "field": "inner_diameter",
+   "style": "cond",
+   "box": [
+    121,
+    1149,
+    88,
+    34
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "outer_diameter",
+   "style": "cond",
+   "box": [
+    348,
+    1149,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "height|width",
+   "style": "cond",
+   "box": [
+    578,
+    1149,
+    91,
+    34
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "fitting_position",
+   "style": "cond",
+   "box": [
+    753,
+    1149,
+    191,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    365,
+    215,
+    295,
+    54
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "field": "name_en",
+   "style": "bold",
+   "box": [
+    428,
+    321,
+    169,
+    34
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    303,
+    541,
+    91,
+    22
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ],
+   "fit": 1.15,
+   "rotate": -2.2,
+   "cap": 24,
+   "length": 91
+  },
+  {
+   "field": "name_fa",
+   "style": "fa",
+   "box": [
+    425,
+    277,
+    176,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  }
+ ]
+}

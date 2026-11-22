@@ -1,0 +1,95 @@
+{
+ "name": "AFRE Oil Seal",
+ "size": [
+  1024,
+  1536
+ ],
+ "images": [
+  {
+   "slot": "product",
+   "box": [
+    519,
+    421,
+    427,
+    410
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    797,
+    247,
+    206,
+    39
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "field": "name_fa",
+   "style": "fa",
+   "box": [
+    778,
+    296,
+    226,
+    44
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "height",
+   "style": "cond",
+   "box": [
+    950,
+    1173,
+    55,
+    23
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  },
+  {
+   "field": "inner_diameter",
+   "style": "cond",
+   "box": [
+    743,
+    1072,
+    73,
+    24
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  },
+  {
+   "field": "outer_diameter",
+   "style": "cond",
+   "box": [
+    741,
+    1013,
+    74,
+    22
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  }
+ ]
+}

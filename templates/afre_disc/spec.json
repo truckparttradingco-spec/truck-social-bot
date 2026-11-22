@@ -1,0 +1,208 @@
+{
+ "name": "AFRE Brake Disc",
+ "size": [
+  1024,
+  1536
+ ],
+ "images": [
+  {
+   "slot": "product",
+   "box": [
+    473,
+    426,
+    511,
+    374
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "field": "brake_disc_thickness",
+   "style": "cond",
+   "box": [
+    354,
+    895,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "brake_disc_thickness",
+   "style": "cond",
+   "box": [
+    506,
+    1187,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "outer_diameter",
+   "style": "cond",
+   "box": [
+    352,
+    976,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "outer_diameter",
+   "style": "cond",
+   "box": [
+    231,
+    1099,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "fitting_position",
+   "style": "cond",
+   "box": [
+    841,
+    878,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "fitting_position_2",
+   "style": "cond",
+   "box": [
+    843,
+    929,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "brake_disc_type",
+   "style": "cond",
+   "box": [
+    843,
+    980,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "weight",
+   "style": "cond",
+   "box": [
+    845,
+    1031,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "name_en",
+   "style": "bold",
+   "box": [
+    256,
+    602,
+    65,
+    21
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ],
+   "fit": 1.1,
+   "rotate": 9.2,
+   "cap": 11,
+   "length": 65
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    727,
+    262,
+    278,
+    54
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    334,
+    591,
+    40,
+    18
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ],
+   "fit": 1.15,
+   "rotate": 5.9,
+   "cap": 13,
+   "length": 39
+  },
+  {
+   "field": "name_fa",
+   "style": "fa",
+   "box": [
+    775,
+    333,
+    226,
+    44
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  }
+ ]
+}

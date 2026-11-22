@@ -1,0 +1,127 @@
+{
+ "name": "KAAN Oil Seal",
+ "size": [
+  1024,
+  1536
+ ],
+ "images": [
+  {
+   "slot": "product",
+   "box": [
+    564,
+    376,
+    438,
+    433
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "field": "height",
+   "style": "cond",
+   "box": [
+    954,
+    1158,
+    55,
+    23
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  },
+  {
+   "field": "inner_diameter",
+   "style": "cond",
+   "box": [
+    746,
+    1055,
+    73,
+    24
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    481,
+    434,
+    86,
+    20
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ],
+   "fit": 1.15
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    806,
+    252,
+    206,
+    39
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "field": "name_fa",
+   "style": "fa",
+   "box": [
+    787,
+    301,
+    226,
+    44
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "name_en",
+   "style": "bold",
+   "box": [
+    327,
+    438,
+    149,
+    16
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ],
+   "fit": 1.1
+  },
+  {
+   "field": "outer_diameter",
+   "style": "cond",
+   "box": [
+    746,
+    997,
+    74,
+    22
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  }
+ ]
+}

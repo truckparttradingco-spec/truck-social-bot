@@ -1,0 +1,286 @@
+{
+ "name": "WEGA Wheel Bolt",
+ "size": [
+  1024,
+  1536
+ ],
+ "images": [
+  {
+   "slot": "product",
+   "box": [
+    600,
+    424,
+    399,
+    260
+   ]
+  },
+  {
+   "slot": "product",
+   "box": [
+    727,
+    867,
+    131,
+    354
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "field": "thread_size",
+   "style": "cond",
+   "box": [
+    762,
+    1253,
+    80,
+    28
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  },
+  {
+   "field": "screw_length_below_head",
+   "style": "cond",
+   "box": [
+    899,
+    1043,
+    80,
+    28
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ],
+   "fit": 1.0
+  },
+  {
+   "field": "head_height|bolt_head_height",
+   "style": "cond",
+   "box": [
+    911,
+    883,
+    80,
+    28
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ],
+   "fit": 1.0
+  },
+  {
+   "field": "length",
+   "style": "cond",
+   "box": [
+    641,
+    1030,
+    80,
+    28
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  },
+  {
+   "field": "head_height|bolt_head_height",
+   "style": "cond",
+   "box": [
+    420,
+    990,
+    93,
+    35
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  },
+  {
+   "field": "bolt_head_diameter",
+   "style": "cond",
+   "box": [
+    764,
+    817,
+    80,
+    28
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  },
+  {
+   "field": "screw_length_below_head",
+   "style": "cond",
+   "box": [
+    423,
+    1043,
+    93,
+    35
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  },
+  {
+   "field": "bolt_head_diameter",
+   "style": "cond",
+   "box": [
+    425,
+    1103,
+    93,
+    35
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  },
+  {
+   "field": "thread_size",
+   "style": "cond",
+   "box": [
+    422,
+    832,
+    93,
+    35
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  },
+  {
+   "field": "thread_length",
+   "style": "cond",
+   "box": [
+    422,
+    892,
+    93,
+    35
+   ],
+   "color": [
+    0,
+    38,
+    86
+   ]
+  },
+  {
+   "field": "name_fa",
+   "style": "fa",
+   "box": [
+    780,
+    335,
+    226,
+    44
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "name_en",
+   "style": "bold",
+   "box": [
+    253,
+    541,
+    144,
+    26
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ],
+   "fit": 1.1,
+   "rotate": 6.5,
+   "cap": 11,
+   "length": 145
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    720,
+    270,
+    278,
+    54
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    240,
+    566,
+    80,
+    24
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ],
+   "fit": 1.15,
+   "rotate": 6.0,
+   "cap": 16,
+   "length": 78
+  },
+  {
+   "field": "qty",
+   "style": "bold",
+   "box": [
+    336,
+    556,
+    75,
+    22
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ],
+   "fit": 1.1,
+   "rotate": 7.7,
+   "cap": 14,
+   "length": 74
+  },
+  {
+   "field": "quality_grade|strength_class",
+   "style": "reg",
+   "box": [
+    433,
+    945,
+    69,
+    27
+   ],
+   "color": [
+    8,
+    41,
+    83
+   ],
+   "align": "left",
+   "cap": 27,
+   "base_y": 972
+  }
+ ]
+}

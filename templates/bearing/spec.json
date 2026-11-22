@@ -1,0 +1,114 @@
+{
+ "name": "HUMMER Bearing",
+ "size": [
+  1024,
+  1536
+ ],
+ "images": [
+  {
+   "slot": "product",
+   "box": [
+    523,
+    494,
+    486,
+    398
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    289,
+    643,
+    119,
+    31
+   ],
+   "color": [
+    0,
+    0,
+    0
+   ],
+   "fit": 1.15,
+   "rotate": 3.2,
+   "cap": 25,
+   "length": 118
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    331,
+    280,
+    384,
+    55
+   ],
+   "color": [
+    255,
+    255,
+    255
+   ]
+  },
+  {
+   "field": "inner_diameter",
+   "style": "cond",
+   "box": [
+    190,
+    982,
+    88,
+    34
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "name_fa",
+   "style": "fa",
+   "box": [
+    809,
+    369,
+    176,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "outer_diameter",
+   "style": "cond",
+   "box": [
+    503,
+    982,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "width|height",
+   "style": "cond",
+   "box": [
+    802,
+    982,
+    91,
+    34
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  }
+ ]
+}

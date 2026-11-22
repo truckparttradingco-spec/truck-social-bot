@@ -1,0 +1,114 @@
+# =====================================================================
+#  تنظیمات ربات تبلیغاتی Truck Part Trading
+#  فقط همین فایل را ویرایش کنید؛ کلیدها و توکن‌ها در فایل .env می‌روند.
+# =====================================================================
+
+brand:
+  name: "Truck Part Trading"
+  website: "www.truckparttrading.com"       # همان‌طور که روی عکس‌ها چاپ می‌شود
+  website_url: "https://www.truckparttrading.com"   # لینک قابل کلیک (فیسبوک/تلگرام)
+  tagline: "Heavy-duty truck & trailer parts"
+  cta: "REQUEST A QUOTE"                    # متن دکمه روی عکس
+  footer_line: "Send us the part number for availability & price"   # خط زیر عنوان روی عکس
+  # اطلاعات تماس: هر کدام را که پر کنید روی عکس و کپشن می‌آید (خالی = نمایش داده نمی‌شود)
+  phone: "021-55282160-61"
+  whatsapp: "09120745582"        # شماره‌ها را از روی قالب‌هایتان برداشته‌ام؛ اصلاح کنید
+  email: ""
+  instagram: "@export.truckpart"
+  # لوگو (اختیاری): فایل PNG شفاف را اینجا بگذارید. اگر نباشد، حروف اول اسم برند ساخته می‌شود.
+  logo: "assets/logo.png"
+
+schedule:
+  timezone: "UTC"              # مثلا Europe/Berlin یا Asia/Tehran یا Asia/Dubai
+  posts: ["10:00", "18:00"]    # دو پست روزانه (به وقت timezone بالا)
+  story_with_each_post: true   # برای هر پست یک استوری هم منتشر شود
+  grace_minutes: 120           # اگر برنامه سر ساعت روشن نبود، تا این مدت بعد هنوز پست می‌کند
+
+platforms:
+  instagram: true
+  facebook: true
+  telegram: true
+  # تلگرام برای کانال‌ها API استوری ندارد؛ فقط پست ارسال می‌شود.
+
+hosting:
+  # اینستاگرام عکس را فقط از «لینک عمومی» می‌گیرد، نه از فایل.
+  # none       = فقط برای تست / وقتی اینستاگرام خاموش است
+  # cloudinary = آپلود خودکار روی Cloudinary (رایگان) - مقادیر در .env
+  # static     = پوشه output را خودتان روی یک وب‌سرور عمومی سرو می‌کنید
+  mode: "cloudinary"
+  public_base_url: ""          # فقط برای mode: static   مثال: https://example.com/social
+
+captions:
+  max_hashtags_instagram: 15
+  base_hashtags: ["trucks", "truckparts", "heavyduty", "trailerparts", "spareparts", "aftermarket", "trucking", "fleet"]
+
+selection:
+  exclude_file_names: ["pack"]     # عکس‌های جعبه (pack.png) در چرخه پست نمی‌آیند
+  exclude_categories: []
+
+graph_api_version: "v23.0"         # اگر متا نسخه را منسوخ کرد، آخرین نسخه را اینجا بگذارید
+
+
+# ---------------------------------------------------------------------
+#  قالب‌های پوستر (فایل‌های PSD شما) - پوشه templates/
+#  هر دسته‌ای که اینجا اسم قالب داشته باشد با همان قالب پست می‌شود؛
+#  بقیه دسته‌ها با طرح خودکار (بدون قالب) ساخته می‌شوند.
+#  قالب‌ها: abs adj bearing bolt(wega_bolt) shock wega china afre_disc afre_seal nok kaan kaan_seal egd
+# ---------------------------------------------------------------------
+templates:
+  # هر دسته: یا اسم یک قالب، یا جدولی از «برند → قالب» (برند از اطلاعات محصول خوانده می‌شود).
+  # برند بدون قالب (یا "*" نبودن) = طرح خودکار.
+  abs: abs                    # HUMMER ABS Ring
+  adj: adj                    # HUMMER Brake Adjuster
+  bearing: bearing            # HUMMER Bearing
+  bolt: wega_bolt             # WEGA Wheel Bolt
+  shock: shock                # HUMMER Shock Absorber
+  suspension: wega            # WEGA Air Suspension
+  china: china                # ORGINAL Chinese Truck Caliper
+  howo: {ORGINAL: china}
+  disc: {AFRE: afre_disc}     # AFRE Brake Disc
+  seal: {NOK: nok, KAAN: kaan_seal, AFRE: afre_seal}
+  kaan: {KAAN: kaan, EGD: egd, EGD FREN: egd}
+  bremse: {EGD FREN: egd, EGD: egd, KAAN: kaan}
+  bpnew: {EGD FREN: egd, EGD: egd}
+  bpw: {EGD FREN: egd, EGD: egd}
+  holland: {EGD FREN: egd, EGD: egd}
+  meritor: {EGD FREN: egd, EGD: egd}
+  wabco: {EGD FREN: egd, EGD: egd}
+  zcam: {EGD FREN: egd, EGD: egd}
+
+poster:
+  use_templates: true   # false = همه پست‌ها با طرح خودکار
+  # مقدار پیش‌فرض خانه‌هایی که برای آن محصول داده‌ای ندارید (خالی = «-»)
+  defaults: {}
+
+# ---------------------------------------------------------------------
+#  دسته‌ها = نام پوشه‌ها داخل products/
+#  اسم‌ها را من از روی شکل عکس‌ها حدس زده‌ام؛ حتما بازبینی و اصلاح کنید.
+# ---------------------------------------------------------------------
+categories:
+  abs:        {title_fa: "رینگ ای‌بی‌اس", title: "ABS Tone Rings",             group: "Brake System", tags: ["abs", "tonering", "wheelspeed"]}
+  adj:        {title_fa: "اتوماتیک ترمز", title: "Brake Adjusters",            group: "Brake System", tags: ["brakeadjuster", "slackadjuster"]}
+  air:        {title_fa: "کیسه باد", title: "Air Springs",                group: "Suspension",   tags: ["airspring", "airbag", "suspension"]}
+  bearing:    {title_fa: "بلبرینگ چرخ", title: "Tapered Roller Bearings",    group: "Wheel-End",    tags: ["bearings", "wheelbearing", "taperedbearing"]}
+  bolt:       {title_fa: "پیچ چرخ", title: "Wheel Bolts",                group: "Wheel-End",    tags: ["wheelbolt", "fasteners", "hubbolt"]}
+  bpnew:      {title_fa: "قطعات ترمز بی‌پی‌دبلیو", title: "BPW Brake Parts",            group: "Brake System", tags: ["bpw", "brakecaliper", "calipersparts"]}
+  bpw:        {title_fa: "قطعات کالیپر بی‌پی‌دبلیو", title: "BPW Caliper Parts",          group: "Brake System", tags: ["bpw", "brakecaliper", "repairkit"]}
+  bremse:     {title_fa: "لوازم کالیپر ترمز", title: "Brake Caliper Repair Parts", group: "Brake System", tags: ["brakecaliper", "repairkit", "brakes"]}
+  bush:       {title_fa: "بوش", title: "Bushings",                   group: "Suspension",   tags: ["bushings", "bushes", "suspensionparts"]}
+  carrier:    {title_fa: "پایه کالیپر ترمز", title: "Brake Caliper Carriers",     group: "Brake System", tags: ["caliper", "calipercarrier", "brakes"]}
+  china:      {title_fa: "قطعات کالیپر ترمز", title: "Brake Caliper Spares",       group: "Brake System", tags: ["brakecaliper", "calipersparts", "repairkit"]}
+  disc:       {title_fa: "دیسک ترمز", title: "Brake Discs",                group: "Brake System", tags: ["brakedisc", "brakerotor", "brakes"]}
+  holland:    {title_fa: "قطعات ترمز و توپی چرخ", title: "Brake & Wheel-End Spares",   group: "Brake System", tags: ["brakes", "wheelend", "repairkit"]}
+  howo:       {title_fa: "قطعات کامیون هوو", title: "HOWO Truck Parts",           group: "Truck Parts",  tags: ["howo", "sinotruk", "trucksparts"]}
+  kaan:       {title_fa: "قطعات کالیپر ترمز", title: "Caliper Spare Parts",        group: "Brake System", tags: ["brakecaliper", "seals", "bushings"]}
+  knorr:      {title_fa: "ست لنت ترمز", title: "Brake Pad Kits",             group: "Brake System", tags: ["brakepads", "padkit", "brakes"]}
+  meritor:    {title_fa: "قطعات کالیپر مریتور", title: "Meritor Caliper Parts",      group: "Brake System", tags: ["meritor", "brakecaliper", "repairkit"]}
+  other:      {title_fa: "درپوش توپی چرخ", title: "Wheel Caps & Accessories",   group: "Truck Parts",  tags: ["hubcap", "accessories", "trucksparts"]}
+  pad:        {title_fa: "لنت ترمز", title: "Brake Pads",                 group: "Brake System", tags: ["brakepads", "brakes", "braking"]}
+  seal:       {title_fa: "کاسه نمد", title: "Oil Seals",                  group: "Wheel-End",    tags: ["oilseal", "seals", "hubseal"]}
+  sensor:     {title_fa: "سنسور لنت ترمز", title: "Brake Wear Sensors",         group: "Brake System", tags: ["wearsensor", "padsensor", "brakes"]}
+  shock:      {title_fa: "کمک فنر", title: "Shock Absorbers",            group: "Suspension",   tags: ["shockabsorber", "damper", "suspension"]}
+  suspension: {title_fa: "کمک فنر بادی کابین", title: "Suspension Parts",           group: "Suspension",   tags: ["suspension", "cabsuspension", "shock"]}
+  wabco:      {title_fa: "قطعات ترمز وبکو", title: "WABCO Brake Parts",          group: "Brake System", tags: ["wabco", "brakes", "calipersparts"]}
+  zcam:       {title_fa: "بادامک ترمز", title: "Brake Camshafts",            group: "Brake System", tags: ["camshaft", "scam", "brakes"]}

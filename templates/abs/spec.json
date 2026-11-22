@@ -1,0 +1,140 @@
+{
+ "name": "HUMMER ABS Ring",
+ "size": [
+  1024,
+  1536
+ ],
+ "images": [
+  {
+   "slot": "product",
+   "box": [
+    390,
+    346,
+    471,
+    348
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "field": "name_fa",
+   "style": "fa",
+   "box": [
+    489,
+    285,
+    296,
+    37
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "inner_diameter",
+   "style": "cond",
+   "box": [
+    468,
+    775,
+    88,
+    34
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "outer_diameter",
+   "style": "cond",
+   "box": [
+    466,
+    833,
+    93,
+    35
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "thickness",
+   "style": "cond",
+   "box": [
+    467,
+    891,
+    91,
+    34
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "weight",
+   "style": "cond",
+   "box": [
+    468,
+    1040,
+    91,
+    34
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "code",
+   "style": "cond",
+   "box": [
+    355,
+    693,
+    155,
+    38
+   ],
+   "color": [
+    255,
+    255,
+    255
+   ]
+  },
+  {
+   "field": "fitting_position",
+   "style": "cond",
+   "box": [
+    464,
+    937,
+    91,
+    34
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  },
+  {
+   "field": "name_en",
+   "style": "bold",
+   "box": [
+    295,
+    1215,
+    417,
+    30
+   ],
+   "color": [
+    7,
+    30,
+    129
+   ]
+  }
+ ]
+}

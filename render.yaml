@@ -1,0 +1,29 @@
+# Render Blueprint: two daily posts as a Cron Job (UTC). Secrets are NOT stored here -
+# Render asks for them (sync: false) or you add them in Dashboard -> Environment.
+services:
+  - type: cron
+    name: truck-social-bot
+    runtime: python
+    plan: starter
+    schedule: "0 10,18 * * *"          # must match schedule.posts in config.yaml (UTC)
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py post --auto
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: TG_BOT_TOKEN
+        sync: false
+      - key: TG_CHAT_ID
+        sync: false
+      - key: FB_PAGE_ID
+        sync: false
+      - key: FB_PAGE_TOKEN
+        sync: false
+      - key: IG_USER_ID
+        sync: false
+      - key: IG_ACCESS_TOKEN
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_UPLOAD_PRESET
+        sync: false
