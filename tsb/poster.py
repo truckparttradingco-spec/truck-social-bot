@@ -43,11 +43,13 @@ def all_field_names() -> list[str]:
 # Fonts
 # --------------------------------------------------------------------------
 _FA_CANDIDATES = [
+    "fonts/aviny.ttf",                     # your Persian font (clear at small sizes)
     "fonts/fa.ttf", "fonts/fa.otf",
     "C:/Windows/Fonts/tahomabd.ttf", "C:/Windows/Fonts/segoeuib.ttf", "C:/Windows/Fonts/arialbd.ttf",
     "/System/Library/Fonts/Supplemental/Arial Bold.ttf", "/Library/Fonts/Arial Bold.ttf",
     "fonts/fa-DejaVuSans-Bold.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
 ]
+_FA_JAVAN = ["fonts/javan.ttf", "fonts/aviny.ttf"]   # display font for big Persian lines
 _LATIN_CANDIDATES = {
     "cond": ["fonts/cond.ttf", "fonts/cond.otf"],
     "bold": ["fonts/bold.ttf", "fonts/bold.otf"],
@@ -70,8 +72,8 @@ def get_font(style: str, size: int) -> ImageFont.FreeTypeFont:
     if key in _font_cache:
         return _font_cache[key]
     f = None
-    if style == "fa":
-        p = _first_existing(_FA_CANDIDATES)
+    if style in ("fa", "fa_javan"):
+        p = _first_existing(_FA_JAVAN if style == "fa_javan" else _FA_CANDIDATES)
         f = ImageFont.truetype(str(p), size) if p else ImageFont.load_default(size)
     else:
         p = _first_existing(_LATIN_CANDIDATES.get(style, []))
@@ -141,6 +143,8 @@ def _size_for_width(style: str, sample: str, width: int) -> int:
 def draw_text(canvas: Image.Image, item: dict, text: str) -> None:
     x, y, w, h = item["box"]
     style = item["style"]
+    if style == "fa" and item.get("font") == "javan":
+        style = "fa_javan"
     rotate = item.get("rotate", 0)
     cx, cy = x + w / 2, y + h / 2
     W, H = canvas.size
@@ -154,9 +158,9 @@ def draw_text(canvas: Image.Image, item: dict, text: str) -> None:
         d = ImageDraw.Draw(canvas)
         d.text((x, item["base_y"]), text, font=font, fill=tuple(item["color"]), anchor="ls")
         return
-    if style == "fa":
+    if style in ("fa", "fa_javan"):
         text = _shape_fa(text) if text else text
-        size = _size_for_width("fa", _shape_fa("نام فارسی کالا"), w)
+        size = _size_for_width(style, _shape_fa("نام فارسی کالا"), w)
         max_w = max(w * 1.7, 200)
     else:
         fit = item.get("fit", 1.6)               # <1.6 for texts printed on a small box label
@@ -177,7 +181,7 @@ def draw_text(canvas: Image.Image, item: dict, text: str) -> None:
     th = int(size * 2)
     layer = Image.new("RGBA", (tw, th), (0, 0, 0, 0))
     d = ImageDraw.Draw(layer)
-    if style == "fa":
+    if style in ("fa", "fa_javan"):
         d.text((tw / 2, th / 2), text, font=font, fill=color, anchor="mm")
         base_y = th / 2
     else:
@@ -188,7 +192,7 @@ def draw_text(canvas: Image.Image, item: dict, text: str) -> None:
     if rotate:
         layer = layer.rotate(rotate, expand=True, resample=Image.BICUBIC)
         canvas.alpha_composite(layer, (int(cx - layer.width / 2), int(cy - layer.height / 2)))
-    elif style == "fa":
+    elif style in ("fa", "fa_javan"):
         canvas.alpha_composite(layer, (int(cx - tw / 2), int(cy - th / 2)))
     else:
         # the new text's baseline sits on the bottom edge of the original (placeholder) text
