@@ -7,7 +7,7 @@ from pathlib import Path
 
 import yaml
 
-from tsb import planner
+from tsb import catalog, planner
 from tsb.config import ROOT, load_config
 
 ap = argparse.ArgumentParser()
@@ -20,6 +20,18 @@ cfg = load_config()
 extra = yaml.safe_load((ROOT / "plan_config.yaml").read_text(encoding="utf-8"))
 cfg.setdefault("captions", {}).update(extra.get("captions", {}))
 cfg["planner"] = extra["planner"]
+
+# The repo's products/ folders are named after the Excel sheets; map them to the categories used in config.yaml
+aliases = extra.get("folders", {})
+_orig_scan = catalog.scan
+
+
+def _scan(products_dir, exclude_names=(), exclude_categories=()):
+    return [catalog.Product(aliases.get(p.category, p.category), p.code, p.path)
+            for p in _orig_scan(products_dir, exclude_names, exclude_categories)]
+
+
+catalog.scan = _scan
 start = date.fromisoformat(args.start) if args.start else date.today() + timedelta(days=1)
 cats = [c for c in args.categories.split(",") if c] or None
 rows = planner.plan(cfg, start, args.days, categories=cats)
