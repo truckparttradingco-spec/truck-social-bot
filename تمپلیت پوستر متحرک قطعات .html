@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>تمپلیت پوستر متحرک قطعات</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@500;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef1f6;--pn:#fff;--tx:#14213d;--bd:#d5dbe6;--navy:#14213d;--red:#d7191f;--yel:#ffd21f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10141c;--pn:#1a2030;--tx:#e8ecf5;--bd:#2c3550}}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Vazirmatn,Tahoma,sans-serif}
+.app{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:20px;padding:16px;max-width:1000px;margin:auto}
+@media(max-width:760px){.app{grid-template-columns:1fr}.stage{order:-1}}
+.ed{background:var(--pn);border:1px solid var(--bd);border-radius:12px;padding:14px;max-height:94vh;overflow:auto}
+.ed h3{margin:14px 0 6px;font-size:14px}.ed h3:first-child{margin-top:0}
+.ed label{display:block;font-size:12px;margin:6px 0 2px;opacity:.8}
+.ed input[type=text]{width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:8px;background:transparent;color:var(--tx);font:inherit;font-size:13px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.btn{font:inherit;font-size:13px;padding:8px 14px;border:0;border-radius:8px;background:var(--red);color:#fff;cursor:pointer}
+.btn:focus-visible,input:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.stage{position:sticky;top:12px;align-self:start;text-align:center}
+.stage .btn{margin-top:10px}
+/* poster */
+.poster{container-type:inline-size;width:min(100%,460px,calc((100vh - 110px)*var(--ar,.606)));aspect-ratio:100/165;margin:auto;position:relative;overflow:hidden;direction:ltr;text-align:left;color:var(--navy);
+background:linear-gradient(160deg,#fff 40%,#dfe7f3);font-family:Vazirmatn,Tahoma,sans-serif;font-weight:800;border-radius:6px;box-shadow:0 8px 30px #0003}
+.poster>*{position:absolute;translate:var(--dx,0cqw) var(--dy,0cqw)}
+.logo{left:5cqw;top:2cqw;height:15cqw;max-width:50cqw;object-fit:contain;display:none}
+.has-logo .brand{display:none}.has-logo .logo{display:block}
+.mv-on>*{outline:.4cqw dashed #1e88e5;cursor:move;touch-action:none;user-select:none}.mv-on>* *{pointer-events:none}
+.brand{left:5cqw;top:2cqw;font-size:17cqw;line-height:1;letter-spacing:-.5cqw;color:#4a4f57;font-family:Arial Black,Impact,sans-serif}
+.truck{right:-2cqw;top:0;width:46cqw;height:30cqw;object-fit:contain}
+.title{left:0;top:19cqw;width:54cqw;height:11cqw;background:var(--navy);border-radius:0 6cqw 6cqw 0;color:#fff;font-size:8.5cqw;font-style:italic;display:flex;align-items:center;justify-content:center;white-space:nowrap}
+.fa{left:3cqw;top:31cqw;width:50cqw;height:6cqw;background:var(--red);color:#fff;border-radius:3cqw;font-size:3.6cqw;display:flex;align-items:center;justify-content:center;direction:rtl}
+.swoosh{right:-10cqw;top:26cqw;width:70cqw;height:3cqw;background:var(--red);transform:rotate(14deg);border-radius:2cqw}
+.prod{left:6cqw;top:40cqw;width:68cqw;height:38cqw;object-fit:contain;animation:flt 4s ease-in-out infinite}
+.ok{right:3cqw;top:66cqw;border:.6cqw solid var(--red);color:var(--red);font-size:3.2cqw;padding:.6cqw 1.6cqw;transform:rotate(-8deg);border-radius:1cqw}
+.code{left:50%;top:80cqw;transform:translateX(-50%);background:var(--navy);color:#fff;border-radius:5cqw;padding:1cqw 5cqw;font-size:6cqw;white-space:nowrap}
+.code b{color:var(--yel)}
+.specs{left:2.5cqw;right:2.5cqw;top:90cqw;height:15cqw;display:grid;grid-template-columns:repeat(4,1fr);border:.3cqw solid #cfd6e4;border-radius:2cqw;background:#ffffffb0}
+.sp{display:flex;flex-direction:column;align-items:center;justify-content:center;border-left:.3cqw solid #cfd6e4}.sp:first-child{border:0}
+.sp i{font-style:normal;font-size:2.6cqw;opacity:.8}.sp b{font-size:5cqw}
+.tbl{left:12cqw;right:12cqw;top:107cqw;border-radius:1.5cqw;overflow:hidden;background:var(--navy);color:#fff}
+.row{display:grid;grid-template-columns:42% 58%;font-size:3cqw;line-height:1.3;padding:.8cqw 4cqw;border-bottom:.2cqw solid #ffffff55}.row:last-child{border:0}
+.row span:last-child{border-right:.2cqw solid #ffffff55;padding-right:3cqw}.row:first-child span:last-child{color:var(--yel);font-size:3.8cqw}
+.badges{left:2.5cqw;right:2.5cqw;top:138cqw;height:9cqw;display:flex;justify-content:space-between;align-items:center;font-size:3.6cqw}
+.bd{background:#fde6e6;border-radius:3cqw;padding:1.5cqw 3cqw;color:var(--red);min-width:26cqw;text-align:center}
+.bd.g{background:#e3f6e6;color:#1a7a35}.tag{font-style:italic;font-size:4.2cqw}
+.foot{left:0;right:0;bottom:0;height:17cqw;background:var(--navy);color:#fff;font-size:3.8cqw;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1.5cqw}
+.foot div{display:flex;gap:6cqw}
+.ed select{width:100%;padding:7px;border:1px solid var(--bd);border-radius:8px;background:transparent;color:var(--tx);font:inherit;font-size:13px}.ed select option{color:#000}
+.poster.f916{--ar:.5625;aspect-ratio:9/16}.f916>*:not(.foot){margin-top:10cqw}
+.poster.f45{--ar:.8;aspect-ratio:100/125}
+.f45 .brand{top:1cqw;font-size:13cqw}.f45 .logo{top:1cqw;height:12cqw}.f45 .truck{width:40cqw;height:25cqw}.f45 .swoosh{top:19cqw}
+.f45 .title{top:14cqw;height:9cqw;font-size:7cqw;width:50cqw}.f45 .fa{top:24.5cqw;height:5.2cqw;font-size:3.2cqw;width:46cqw}
+.f45 .prod{top:31cqw;left:3cqw;width:50cqw;height:30cqw}.f45 .ok{left:36cqw;right:auto;top:53cqw}.f45 .code{top:65cqw;font-size:5cqw}
+.f45 .specs{left:54cqw;right:2.5cqw;top:33cqw;height:29cqw;grid-template-columns:1fr 1fr}.f45 .sp{border:.2cqw solid #cfd6e4}.f45 .sp b{font-size:4cqw}
+.f45 .tbl{top:75cqw;left:8cqw;right:8cqw}.f45 .row{font-size:2.8cqw;padding:.6cqw 4cqw}
+.f45 .badges{top:104cqw;height:7cqw;font-size:3cqw}.f45 .foot{height:13cqw;font-size:3.4cqw;gap:1cqw}
+.poster.t2{--navy:#0f1522;--red:#f5b301;--yel:#ffd21f;background:radial-gradient(circle at 70% 30%,#27324a,#0a0e17);color:#fff}
+.t2 .brand{color:#fff}.t2 .title{background:var(--red);color:#111}.t2 .fa{background:#2a3550}.t2 .specs{background:#ffffff14;border-color:#ffffff33}.t2 .sp{border-color:#ffffff33}.t2 .tbl{background:#1b2436}.t2 .foot{background:#05070c}.t2 .bd{background:#2a3550;color:#ffd21f}.t2 .bd.g{background:#12351f;color:#6ee79a}
+.poster.t3{--navy:#6d0a0f;--red:#e11d2a;--yel:#ffe066;background:linear-gradient(160deg,#fff 35%,#ffd9d9)}
+.t3 .title{border-radius:0;clip-path:polygon(0 0,100% 0,94% 100%,0 100%)}.t3 .fa{border-radius:0;clip-path:polygon(0 0,100% 0,96% 100%,0 100%)}.t3 .brand{color:#6d0a0f}.t3 .tbl{border-radius:0}.t3 .swoosh{height:5cqw}
+.poster.t4{--navy:#0f3d2e;--red:#f59e0b;--yel:#ffe08a;background:repeating-linear-gradient(135deg,#f4f8f3 0 3cqw,#e6efe3 3cqw 6cqw)}
+.t4 .brand{color:#0f3d2e}.t4 .fa{color:#111}.t4 .title,.t4 .fa,.t4 .code,.t4 .tbl,.t4 .bd{border-radius:1cqw}.t4 .specs{gap:1cqw;background:none;border:0}.t4 .sp{background:var(--navy);color:#fff;border:0;border-radius:1cqw}
+.poster.t5{--navy:#0b3c7a;--red:#ff6a00;--yel:#ffe08a;background:linear-gradient(160deg,#f2f8ff 30%,#bcd8fa)}
+.t5 .brand{color:#0b3c7a}.t5 .title{border-radius:6cqw;left:3cqw}.t5 .tbl{background:#fff;color:#0b3c7a;box-shadow:0 .5cqw 2cqw #0b3c7a33}.t5 .row,.t5 .row span:last-child{border-color:#0b3c7a2a}.t5 .row:first-child span:last-child{color:#ff6a00}
+.poster.t6{--navy:#111;--red:#ff3b30;--yel:#ffd21f;background:linear-gradient(160deg,#fafafa 40%,#dcdcdc)}
+.t6 .brand{color:#111}.t6 .title,.t6 .fa,.t6 .code,.t6 .tbl,.t6 .specs,.t6 .bd{border-radius:0}.t6 .swoosh{border-radius:0;height:1.5cqw}
+.mir .brand,.mir .logo{left:auto;right:4cqw}.mir .truck{right:auto;left:-2cqw;scale:-1 1}.mir .swoosh{right:auto;left:-10cqw;transform:rotate(-14deg)}
+.mir .title{left:auto;right:0;border-radius:6cqw 0 0 6cqw}.mir .fa{left:auto;right:3cqw}
+.bm .prod{left:auto;right:6cqw}.bm .ok{right:auto;left:8cqw}.f45.bm .prod{right:3cqw}.f45.bm .specs{left:2.5cqw;right:54cqw}.f45.bm .ok{left:auto;right:36cqw}
+.play.mir .truck{animation-name:driveL}.play.mir .title,.play.mir .fa{animation-name:slideR}
+@keyframes driveL{from{transform:translateX(-60cqw);opacity:0}}@keyframes slideR{from{transform:translateX(60cqw)}}
+.poster{--u:4px}
+.hc .brand{left:0;right:0;text-align:center;font-size:13cqw}.hc .logo{left:0;right:0;margin:0 auto}.hc .truck{width:26cqw;height:17cqw;right:0;left:auto}.hc .title{left:5cqw;width:90cqw;border-radius:6cqw}.hc .fa{left:15cqw;width:70cqw}
+.poster{color:var(--ink,#14213d)}.poster .brand{color:var(--brandc,#4a4f57)}
+.poster .title{background:var(--tbg,var(--navy));color:var(--ttx,#fff)}.poster .fa{background:var(--fbg,var(--red));color:var(--fx,#fff)}
+.poster .specs{background:var(--card,#ffffffb0);border-color:var(--line,#cfd6e4)}.poster .sp{border-color:var(--line,#cfd6e4)}
+.poster .tbl{background:var(--tbl,var(--navy));color:var(--tblx,#fff)}.poster .row,.poster .row span:last-child{border-color:var(--rowl,#ffffff55)}
+.poster .foot{background:var(--foot,var(--navy))}.poster .bd{background:var(--bdb,#fde6e6);color:var(--bdc,var(--red))}.poster .bd.g{background:var(--gb,#e3f6e6);color:var(--gc,#1a7a35)}.poster .tag{color:var(--ink,#14213d)}
+.poster.c1{--bgA:#fff;--bgB:#dfe7f3}
+.poster.c2{--navy:#0f1522;--red:#f5b301;--yel:#ffd21f;--ink:#fff;--brandc:#fff;--card:#ffffff14;--line:#ffffff33;--tbl:#1b2436;--foot:#05070c;--tbg:#f5b301;--ttx:#111;--fbg:#2a3550;--bdb:#2a3550;--bdc:#ffd21f;--gb:#12351f;--gc:#6ee79a;--bgA:#27324a;--bgB:#0a0e17}
+.poster.c3{--navy:#6d0a0f;--red:#e11d2a;--yel:#ffe066;--ink:#6d0a0f;--brandc:#6d0a0f;--bgA:#fff;--bgB:#ffd9d9}
+.poster.c4{--navy:#0f3d2e;--red:#f59e0b;--yel:#ffe08a;--ink:#0f3d2e;--brandc:#0f3d2e;--fx:#111;--bgA:#f4f8f3;--bgB:#dbe9d8}
+.poster.c5{--navy:#0b3c7a;--red:#ff6a00;--yel:#ff6a00;--ink:#0b3c7a;--brandc:#0b3c7a;--tbl:#fff;--tblx:#0b3c7a;--rowl:#0b3c7a2a;--bgA:#f2f8ff;--bgB:#bcd8fa}
+.poster.c6{--navy:#111;--red:#ff3b30;--yel:#ffd21f;--ink:#111;--brandc:#111;--bgA:#fafafa;--bgB:#dcdcdc}
+.poster.b1{background:linear-gradient(160deg,var(--bgA) 40%,var(--bgB))}
+.poster.b2{background:radial-gradient(circle at 70% 30%,var(--bgA),var(--bgB))}
+.poster.b3{background:repeating-linear-gradient(135deg,var(--bgA) 0 calc(var(--u)*3),var(--bgB) calc(var(--u)*3) calc(var(--u)*6))}
+.poster.b4{background:radial-gradient(var(--bgB) calc(var(--u)*.7),transparent calc(var(--u)*.8)) 0 0/calc(var(--u)*4) calc(var(--u)*4),var(--bgA)}
+.poster.b5{background:linear-gradient(var(--bgB) 1px,transparent 1px) 0 0/calc(var(--u)*5) calc(var(--u)*5),linear-gradient(90deg,var(--bgB) 1px,transparent 1px) 0 0/calc(var(--u)*5) calc(var(--u)*5),var(--bgA)}
+.poster.b6{background:linear-gradient(115deg,var(--bgA) 55%,var(--bgB) 55%)}
+.e2 .title,.e2 .fa,.e2 .code,.e2 .tbl,.e2 .specs,.e2 .bd,.e2 .ok{border-radius:0}.e2 .swoosh{border-radius:0;height:1.5cqw}
+.e3 .title{border-radius:0;clip-path:polygon(0 0,100% 0,94% 100%,0 100%)}.e3 .fa{border-radius:0;clip-path:polygon(0 0,100% 0,96% 100%,0 100%)}.e3 .tbl,.e3 .specs{border-radius:0}.e3 .swoosh{height:5cqw}
+.e4 .title,.e4 .fa{border-radius:6cqw}.e4 .tbl,.e4 .specs{border-radius:3cqw}.e4 .tbl,.e4 .specs,.e4 .code{box-shadow:0 .8cqw 2.4cqw #0005}.e4 .swoosh{height:4.5cqw}
+.e5 .title{background:none;color:var(--ink);border:.7cqw solid var(--red);border-radius:2cqw}.e5 .fa{background:none;color:var(--red);border:.5cqw solid var(--red)}.e5 .code{background:none;color:var(--ink);border:.6cqw solid var(--ink)}.e5 .code b{color:var(--red)}.e5 .swoosh{height:1cqw}
+.e6 .title,.e6 .fa,.e6 .code,.e6 .tbl,.e6 .specs{border-radius:.8cqw;box-shadow:.9cqw .9cqw 0 var(--red)}.e6 .swoosh{display:none}
+.box{left:4cqw;top:40cqw;width:46cqw;height:36cqw;transform:rotate(-7deg);filter:drop-shadow(0 1.5cqw 2cqw #0006)}
+.bx{width:100%;height:100%;display:flex;flex-direction:column;border-radius:1cqw;overflow:hidden;background:var(--red)}
+.bt{flex:0 0 46%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font:900 8.5cqw Arial Black,Impact,sans-serif;letter-spacing:-.3cqw}
+.bb{flex:1;position:relative;display:flex;flex-direction:column;justify-content:center;padding:0 4cqw;color:#fff;line-height:1}
+.bb i{font-style:italic;background:#000a;padding:1cqw 2cqw;align-self:flex-start;font-size:5cqw;white-space:nowrap}
+.bb u{position:absolute;bottom:2cqw;left:4cqw;right:4cqw;height:3.5cqw;background:repeating-linear-gradient(90deg,#fff 0 .5cqw,transparent .5cqw 1.1cqw);text-decoration:none}
+.poster.c2 .bb{color:#111}.bi{display:none;width:100%;height:100%;object-fit:contain}.has-box .bx{display:none}.has-box .bi{display:block}
+.prod{left:28cqw;top:49cqw;width:68cqw;height:34cqw}
+.f45 .box{left:3cqw;top:31cqw;width:28cqw;height:25cqw}.f45 .prod{left:14cqw;top:38cqw;width:42cqw;height:24cqw}
+.f45 .bt{font-size:5cqw}.f45 .bb{padding:0 2cqw}.f45 .bb i{font-size:3cqw;padding:.6cqw 1.2cqw}.f45 .bb u{height:2cqw;bottom:1.2cqw;left:2cqw;right:2cqw}
+.bm .box{left:auto;right:4cqw;transform:rotate(7deg)}.bm .prod{left:4cqw;right:auto}
+.f45.bm .box{left:auto;right:3cqw}.f45.bm .prod{left:auto;right:14cqw}
+.play .box{animation:boxin .9s cubic-bezier(.2,.8,.2,1) .5s both}
+@keyframes boxin{from{transform:translateY(10cqw) rotate(-22deg) scale(.6);opacity:0}}
+/* animation */
+.play .a{animation:in .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0s)}
+.play .truck{animation:drive 1.2s cubic-bezier(.2,.8,.2,1) .2s both}
+.play .title,.play .fa{animation:slide .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d)}
+.play .ok{animation:stamp .5s cubic-bezier(.3,1.6,.5,1) 1.9s both}
+.play .code{animation:pop .6s cubic-bezier(.3,1.5,.5,1) 1.3s both}
+.play .row{animation:in .5s both;animation-delay:calc(2s + var(--i)*.12s)}
+.play .sp{animation:in .5s both;animation-delay:calc(1.5s + var(--i)*.1s)}
+@keyframes in{from{opacity:0;transform:translateY(4cqw)}}
+@keyframes slide{from{transform:translateX(-60cqw)}}
+@keyframes drive{from{transform:translateX(60cqw);opacity:0}}
+@keyframes pop{from{transform:translateX(-50%) scale(.3);opacity:0}}
+@keyframes stamp{from{transform:rotate(-8deg) scale(3);opacity:0}}
+@keyframes flt{50%{transform:translateY(-1.5cqw) rotate(-1deg)}}
+@media(prefers-reduced-motion:reduce){.poster *{animation:none!important}}
+</style></head><body>
+<div class="app">
+<div class="ed" id="ed"></div>
+<div class="stage"><div class="poster play f45 c1 b1 e1" id="p"></div>
+<button class="btn" id="re">پخش دوباره انیمیشن</button>
+<p style="font-size:12px;opacity:.7">برای خروجی ویدیویی، هنگام پخش از صفحه ضبط (Screen Record) بگیرید.</p></div>
+</div>
+<script>
+const ring=()=>{let t='';for(let i=0;i<90;i++){const a=i*4*Math.PI/180;t+=`<line x1="${100+78*Math.cos(a)}" y1="${60+34*Math.sin(a)}" x2="${100+90*Math.cos(a)}" y2="${60+39*Math.sin(a)}" stroke="#7d848c" stroke-width="2"/>`}
+return 'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120"><ellipse cx="100" cy="60" rx="92" ry="40" fill="#c4c9cf"/>${t}<ellipse cx="100" cy="60" rx="74" ry="32" fill="#f3f6fb"/></svg>`)};
+const truckSvg='data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 130"><rect x="10" y="20" width="110" height="70" rx="4" fill="#cfd5de"/><path d="M120 40h45l20 30v30h-65z" fill="#9aa4b4"/><rect x="130" y="48" width="38" height="20" fill="#dfe9f5"/><circle cx="50" cy="104" r="14" fill="#222"/><circle cx="100" cy="104" r="14" fill="#222"/><circle cx="160" cy="104" r="14" fill="#222"/></svg>');
+const S={brand:'HUMMER',name:'ABS RING',fa:'دورخون چرخ جلو آکسور یورو 5',code:'10015',tag:'Precision You Can Trust',ok:'OE MATCHED',
+s0l:'Inner Ø',s0v:'140 mm',s1l:'Outer Ø',s1v:'178 mm',s2l:'Thickness',s2v:'2 mm',s3l:'Type',s3v:'ABS Ring',
+r0l:'for OE number',r0v:'943 334 0115',r1l:'Fitting Position',r1v:'Rear Axle both sides',r2l:'Fitting Position',r2v:'Front Axle both sides',r3l:'Guarantee',r3v:'2 years warranty',r4l:'Net Weight',r4v:'196 g',
+made:'Made in China',qc:'Multi-level QC',web:'www.truckparttrading.com',t1:'021-55282160-61',m1:'0912-074-5582',m2:'0914-372-0957'};
+const F=[['عمومی',[['brand','برند'],['name','نام کالا (انگلیسی)'],['fa','نام کالا (فارسی)'],['code','کد کالا'],['tag','شعار'],['ok','مهر تأیید']]],
+['مشخصات اصلی (۴ کارت)',[0,1,2,3].map(i=>[['s'+i+'l','عنوان '+(i+1)],['s'+i+'v','مقدار '+(i+1)]]).flat()],
+['جدول مشخصات',[0,1,2,3,4].map(i=>[['r'+i+'l','ردیف '+(i+1)+' - عنوان'],['r'+i+'v','ردیف '+(i+1)+' - مقدار']]).flat()],
+['پایین پوستر',[['made','نشان چپ'],['qc','نشان راست'],['web','وب‌سایت'],['t1','تلفن'],['m1','موبایل ۱'],['m2','موبایل ۲']]]];
+const p=document.getElementById('p');
+p.innerHTML=`<div class="swoosh a" style="--d:.1s"></div><div class="box"><div class="bx"><div class="bt" data-k="brand"></div><div class="bb"><i data-k="name"></i><u></u></div></div><img class="bi" id="truck" alt=""></div><div class="brand a" data-k="brand" style="--d:0s"></div><img class="logo a" id="logo" alt="" style="--d:0s">
+<div class="title" data-k="name" style="--d:.3s"></div><div class="fa" data-k="fa" style="--d:.55s"></div>
+<img class="prod a" id="prod" alt="" style="--d:.8s"><div class="ok" data-k="ok"></div>
+<div class="code">CODE : <b data-k="code"></b></div>
+<div class="specs">${[0,1,2,3].map(i=>`<div class="sp" style="--i:${i}"><i data-k="s${i}l"></i><b data-k="s${i}v"></b></div>`).join('')}</div>
+<div class="tbl">${[0,1,2,3,4].map(i=>`<div class="row" style="--i:${i}"><span data-k="r${i}l"></span><span data-k="r${i}v"></span></div>`).join('')}</div>
+<div class="badges a" style="--d:2.7s"><div class="bd" data-k="made"></div><div class="tag" data-k="tag"></div><div class="bd g" data-k="qc"></div></div>
+<div class="foot a" style="--d:2.9s"><div><span data-k="web"></span><span data-k="t1"></span></div><div><span data-k="m1"></span><span data-k="m2"></span></div></div>`;
+document.getElementById('prod').src=ring();document.getElementById('truck').src=truckSvg;[...p.children].forEach(c=>c.classList.add('mv'));
+const up=(id,lab,tgt)=>`<label>${lab}</label><input type="file" accept="image/*" data-up="${tgt}">`;
+document.getElementById('ed').innerHTML=`<h3>قالب و رنگ‌بندی</h3><select id="thm"><option value="t1">۱ - سرمه‌ای و قرمز (کلاسیک)</option><option value="t2">۲ - شب و طلایی</option><option value="t3">۳ - قرمز تهاجمی (تیتر اریب)</option><option value="t4">۴ - سبز صنعتی (کارت‌های توپر)</option><option value="t5">۵ - آبی و نارنجی (جدول روشن)</option><option value="t6">۶ - مینیمال خاکستری (گوشه تیز)</option></select><button class="btn" id="rnd" style="margin-top:6px">قالب تصادفی برای پست بعدی</button><h3>خروجی ویدیو</h3><button class="btn" id="vid">ضبط و ذخیره ویدیو</button><p id="vst" style="font-size:12px;opacity:.8;margin:6px 0 0"></p><h3>اندازه خروجی</h3><select id="fmt"><option value="f45">پست اینستاگرام ۴:۵ (۱۰۸۰×۱۳۵۰)</option><option value="f916">استوری / ریلز ۹:۱۶ (۱۰۸۰×۱۹۲۰)</option><option value="f23">پوستر بلند (چاپ)</option></select><h3>جابجایی اجزا</h3><label><input type="checkbox" id="mvc"> حالت جابجایی (هر بخش را بکشید)</label><button class="btn" id="rst" style="margin-top:6px">بازگشت چیدمان به حالت اول</button><h3>تصاویر</h3>${up(0,'لوگو (تصویر)','logo')}<button class="btn" id="nologo" style="margin-top:6px">حذف لوگوی تصویری (برگشت به متن)</button>${up(0,'تصویر کالا','prod')}${up(0,'تصویر کامیون/بنر','truck')}`+
+F.map(([h,fs])=>`<h3>${h}</h3><div class="pair">${fs.map(([k,l])=>`<div><label>${l}</label><input type="text" data-in="${k}"></div>`).join('')}</div>`).join('');
+const paint=k=>document.querySelectorAll(`[data-k="${k}"]`).forEach(e=>{e.textContent=S[k];if(/^r\dv$/.test(k))e.parentElement.style.display=/^\s*-?\s*$/.test(S[k])?'none':''});
+Object.keys(S).forEach(paint);
+document.querySelectorAll('[data-in]').forEach(i=>{const k=i.dataset.in;i.value=S[k];i.addEventListener('input',()=>{S[k]=i.value;paint(k)})});
+document.querySelectorAll('[data-up]').forEach(i=>i.addEventListener('change',()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{document.getElementById(i.dataset.up).src=r.result;if(i.dataset.up==='logo')p.classList.add('has-logo');if(i.dataset.up==='truck')p.classList.add('has-box')};r.readAsDataURL(f)}));
+const play=()=>{p.classList.remove('play');void p.offsetWidth;p.classList.add('play')};
+document.getElementById('re').onclick=play;
+document.getElementById('mvc').onchange=e=>p.classList.toggle('mv-on',e.target.checked);
+document.getElementById('nologo').onclick=()=>p.classList.remove('has-logo');
+document.getElementById('rst').onclick=()=>{Object.keys(pos).forEach(k=>delete pos[k]);[...p.children].forEach(c=>{c.style.removeProperty('--dx');c.style.removeProperty('--dy')})};
+const pos={};
+const T=['t1','t2','t3','t4','t5','t6'],th=document.getElementById('thm');
+const setT=v=>{p.classList.remove(...T);p.classList.add(v);th.value=v};
+th.onchange=()=>{setT(th.value);play()};
+const rnd=document.getElementById('rnd');rnd.textContent='🎲 رندوم (رنگ‌بندی + چینش)';
+rnd.insertAdjacentHTML('afterend','<label><input type="checkbox" id="mir"> چینش آینه‌ای (چپ/راست)</label>');
+const mir=document.getElementById('mir');mir.onchange=()=>{p.classList.toggle('mir',mir.checked);play()};
+rnd.onclick=()=>{let v;do v=T[Math.random()*6|0];while(v===th.value);setT(v);mir.checked=Math.random()<.5;p.classList.toggle('mir',mir.checked);document.getElementById('rst').click();play()};
+document.getElementById('ed').insertAdjacentHTML('afterbegin','<h3>پر کردن خودکار مشخصات</h3><label>اطلاعات کالا را بنویسید (نام، کد، ابعاد، جنس، کاربرد، ...)</label><textarea id="ai" rows="4" style="width:100%;padding:7px;border:1px solid var(--bd);border-radius:8px;background:transparent;color:var(--tx);font:inherit;font-size:13px"></textarea><button class="btn" id="aib" style="margin-top:6px">پر کردن مشخصات از روی اطلاعات</button><p id="ais" style="font-size:12px;opacity:.8;margin:6px 0 0"></p><h3>موسیقی ویدیو</h3><select id="mus"><option value="0">بدون موزیک</option><option value="1">بی‌کلام ۱ - ضربی و پرانرژی</option><option value="2">بی‌کلام ۲ - آرام و گرم</option><option value="3">بی‌کلام ۳ - سینمایی</option><option value="f">فایل صوتی خودم</option></select><input type="file" accept="audio/*" id="muf" style="display:none;margin-top:6px"><p style="font-size:12px;opacity:.8;margin:6px 0 0">موزیک‌ها بی‌کلام و ساخته‌شده در همین صفحه‌اند (بدون مشکل کپی‌رایت). موزیک کتابخانه‌ی اینستاگرام را فقط در خود اپ هنگام انتشار می‌شود اضافه کرد.</p>');
+document.getElementById('thm').remove();document.getElementById('mir').closest('label').remove();
+new ResizeObserver(()=>p.style.setProperty('--u',p.clientWidth/100+'px')).observe(p);
+const AX=[['c','رنگ‌بندی',['کلاسیک سرمه‌ای','شب طلایی','قرمز','سبز صنعتی','آبی نارنجی','مینیمال']],['l','چیدمان',['استاندارد','هدر راست','هدر وسط','آینه‌ای','آینه‌ای + هدر راست','آینه‌ای + هدر وسط']],['b','بک‌گراند',['گرادیان','نور مرکزی','راه‌راه','نقطه‌ای','خط‌کشی','دو‌تکه']],['e','المان‌ها',['گرد','تیز','اریب','نرم با سایه','خط‌دور','کارتونی']]];
+const LC=[[],['mir'],['hc'],['bm'],['mir','bm'],['hc','bm']],ax={c:1,l:1,b:1,e:1};
+function apply(){['c','b','e'].forEach(k=>{for(let i=1;i<=6;i++)p.classList.remove(k+i);p.classList.add(k+ax[k])});['mir','hc','bm'].forEach(c=>p.classList.remove(c));LC[ax.l-1].forEach(c=>p.classList.add(c));AX.forEach(([k])=>document.getElementById('ax'+k).value=ax[k])}
+rnd.insertAdjacentHTML('beforebegin',AX.map(([k,t,o])=>`<label>${t}</label><select id="ax${k}">${o.map((n,i)=>`<option value="${i+1}">${i+1} - ${n}</option>`).join('')}</select>`).join(''));
+AX.forEach(([k])=>document.getElementById('ax'+k).onchange=e=>{ax[k]=+e.target.value;apply();document.getElementById('rst').click();play()});
+rnd.onclick=()=>{AX.forEach(([k])=>ax[k]=1+Math.random()*6|0);apply();document.getElementById('rst').click();play()};
+apply();
+const bu=document.querySelector('[data-up="truck"]');bu.previousElementSibling.textContent='تصویر جعبه کالا (اختیاری، جایگزین جعبه‌ی خودکار)';
+bu.insertAdjacentHTML('afterend','<button class="btn" id="nobox" style="margin-top:6px">برگشت به جعبه‌ی خودکار</button>');
+document.getElementById('nobox').onclick=()=>p.classList.remove('has-box');
+document.getElementById('mus').onchange=e=>{document.getElementById('muf').style.display=e.target.value==='f'?'block':'none'};
+function synth(ac,out,k,D){const b=60/[118,90,100][k-1],t0=ac.currentTime+.05,R=[[220,175,196,165],[196,147,165,220],[175,220,196,262]][k-1],g=ac.createGain();g.gain.setValueAtTime(.45,t0);g.gain.setValueAtTime(.45,t0+D-.7);g.gain.linearRampToValueAtTime(0,t0+D);g.connect(out);
+const tn=(f,t,d,ty,v)=>{const o=ac.createOscillator(),e=ac.createGain();o.type=ty;o.frequency.value=f;e.gain.setValueAtTime(0,t);e.gain.linearRampToValueAtTime(v,t+Math.min(.04,d/3));e.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(e);e.connect(g);o.start(t);o.stop(t+d+.05)};
+for(let i=0;i*b<D;i++){const t=t0+i*b,r=R[(i>>2)%4];
+if(k===1){const o=ac.createOscillator(),e=ac.createGain();o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(40,t+.14);e.gain.setValueAtTime(.9,t);e.gain.exponentialRampToValueAtTime(.001,t+.2);o.connect(e);e.connect(g);o.start(t);o.stop(t+.25);tn(r*2,t+b/2,b/2,'square',.08)}else tn(r/2,t,b*1.8,'sine',.35);
+if(i%4===0)[1,1.25,1.5].forEach(m=>tn(r*m*(k===3?2:1),t,b*4,k===3?'sawtooth':'triangle',k===3?.05:.1));
+if(k===3)tn(r*4*[1,1.25,1.5,1.25][i%4],t,b,'sine',.06)}}
+async function snap(){const w=p.clientWidth,h=p.clientHeight,cl=p.cloneNode(true),S=[p,...p.querySelectorAll('*')],D=[cl,...cl.querySelectorAll('*')];
+S.forEach((s,i)=>{const c=getComputedStyle(s);let t='';for(const k of c)if(!/^(animation|transition)/.test(k)&&k!=='container-type')t+=k+':'+c.getPropertyValue(k)+';';D[i].setAttribute('style',t);D[i].removeAttribute('class')});
+cl.style.boxShadow='none';cl.style.margin='0';
+const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><foreignObject width="100%" height="100%">${new XMLSerializer().serializeToString(cl)}</foreignObject></svg>`;
+const im=new Image();im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);await im.decode();return im}
+const aib=document.getElementById('aib'),ais=document.getElementById('ais');
+aib.onclick=async()=>{const txt=document.getElementById('ai').value.trim();if(!txt){ais.textContent='ابتدا اطلاعات کالا را بنویسید.';return}
+const sm=window.claude?await claude.use('sample').catch(()=>null):null;if(!sm){ais.textContent='هوش مصنوعی در این نمایش در دسترس نیست؛ فیلدها را دستی پر کنید.';return}
+aib.disabled=true;ais.textContent='در حال تحلیل اطلاعات...';
+try{const r=await sm.json('از اطلاعات زیر برای پوستر تبلیغاتی قطعه کامیون یک شیء JSON بساز. فقط JSON بده. کلیدها: name (نام کوتاه انگلیسی کالا با حروف بزرگ), fa (عنوان فارسی کوتاه), code, s0l,s0v,s1l,s1v,s2l,s2v,s3l,s3v (چهار مشخصه‌ی اصلی؛ عنوان انگلیسی کوتاه مثل Inner Ø و مقدار مثل 140 mm), r0l,r0v,r1l,r1v,r2l,r2v,r3l,r3v,r4l,r4v (پنج ردیف جدول؛ اگر شماره OE هست ردیف اول باشد؛ ردیف‌های اضافه را با مقدار - پر کن). فقط از اطلاعات داده‌شده استفاده کن و هیچ عدد یا مشخصه‌ی جدیدی از خودت نساز. اطلاعات:\n'+txt);
+Object.keys(r).forEach(k=>{if(k in S&&typeof r[k]==='string'){S[k]=r[k];paint(k);const i=document.querySelector(`[data-in="${k}"]`);if(i)i.value=r[k]}});ais.textContent='مشخصات پر شد. می‌توانید دستی اصلاحش کنید.';play()}
+catch(e){ais.textContent=e&&e.code==='not_granted'?'اجازه‌ی استفاده داده نشد.':'تحلیل انجام نشد؛ دوباره امتحان کنید.'}
+aib.disabled=false};
+const vst=document.getElementById('vst'),vb=document.getElementById('vid');
+vb.onclick=async()=>{
+const dl=window.claude?await claude.use('downloads').catch(()=>null):null;
+if(!dl){vst.textContent='ذخیره مستقیم در این نمایش ممکن نیست. از ضبط صفحه (Screen Record) استفاده کنید.';return}
+if(!window.MediaRecorder){vst.textContent='مرورگر از ضبط ویدیو پشتیبانی نمی‌کند. از Chrome روی کامپیوتر استفاده کنید.';return}
+vb.disabled=true;const was=p.classList.contains('mv-on');p.classList.remove('mv-on');
+try{const W=1080,H=Math.round(W*p.clientHeight/p.clientWidth),fps=30,N=Math.round(fps*5.5),cv=document.createElement('canvas');cv.width=W;cv.height=H;const cx=cv.getContext('2d'),fr=[];play();
+for(let i=0;i<N;i++){p.getAnimations({subtree:true}).forEach(a=>{a.pause();a.currentTime=i*1000/fps});
+cx.drawImage(await snap(),0,0,W,H);fr.push(await new Promise(r=>cv.toBlob(r,'image/jpeg',.9)));vst.textContent='در حال ساخت فریم‌ها '+Math.round(i/N*100)+'٪'}
+const mt=['video/mp4;codecs=avc1.42E01E','video/webm;codecs=vp9','video/webm'].find(m=>MediaRecorder.isTypeSupported(m)),ext=mt.includes('mp4')?'mp4':'webm';
+const st=cv.captureStream(fps),mv=document.getElementById('mus').value;let ac=null,src=null,ds=null,sk=0;
+if(mv!=='0'){ac=new AudioContext();await ac.resume();ds=ac.createMediaStreamDestination();
+if(mv==='f'){const f=document.getElementById('muf').files[0];if(f){src=ac.createBufferSource();src.buffer=await ac.decodeAudioData(await f.arrayBuffer());src.loop=true;src.connect(ds)}}else sk=+mv;
+ds.stream.getAudioTracks().forEach(t=>st.addTrack(t))}
+const am=ac?(mt.includes('mp4')?mt+',mp4a.40.2':'video/webm;codecs=vp9,opus'):mt;
+const mr=new MediaRecorder(st,{mimeType:MediaRecorder.isTypeSupported(am)?am:mt,videoBitsPerSecond:8e6}),ch=[];mr.ondataavailable=e=>ch.push(e.data);const fin=new Promise(r=>mr.onstop=r);
+vst.textContent='در حال تولید ویدیو...';mr.start();if(src)src.start();else if(sk)synth(ac,ds,sk,5.5);const t0=performance.now();
+for(let i=0;i<N;i++){cx.drawImage(await createImageBitmap(fr[i]),0,0);const w=t0+(i+1)*1000/fps-performance.now();if(w>0)await new Promise(r=>setTimeout(r,w))}
+mr.stop();await fin;if(ac)ac.close();await dl.save({filename:'poster-'+(Date.now()%100000)+'.'+ext,data:new Blob(ch,{type:mt})});vst.textContent='ویدیو آماده شد.'}
+catch(e){vst.textContent=e&&e.code==='declined'?'ذخیره لغو شد.':'ساخت ویدیو در این مرورگر ناموفق بود. از ضبط صفحه استفاده کنید.'}
+finally{vb.disabled=false;if(was)p.classList.add('mv-on');play()}};
+document.getElementById('fmt').onchange=e=>{p.classList.remove('f45','f916','f23');p.classList.add(e.target.value);document.getElementById('rst').click();play()};
+p.addEventListener('pointerdown',e=>{if(!p.classList.contains('mv-on'))return;const t=[...p.children].find(c=>c.contains(e.target));if(!t)return;e.preventDefault();const u=p.clientWidth/100,i=[...p.children].indexOf(t),s=pos[i]||[0,0],x0=e.clientX,y0=e.clientY;t.setPointerCapture(e.pointerId);
+const mv=ev=>{const v=[s[0]+(ev.clientX-x0)/u,s[1]+(ev.clientY-y0)/u];pos[i]=v;t.style.setProperty('--dx',v[0]+'cqw');t.style.setProperty('--dy',v[1]+'cqw')};
+const end=()=>{t.removeEventListener('pointermove',mv);t.removeEventListener('pointerup',end)};
+t.addEventListener('pointermove',mv);t.addEventListener('pointerup',end)});
+</script></body></html>
