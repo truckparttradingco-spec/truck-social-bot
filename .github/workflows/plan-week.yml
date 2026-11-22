@@ -1,0 +1,42 @@
+# Renders Instagram posts + stories (random times) into media/ and commits them.
+# Run it by hand (Actions -> plan-week -> Run workflow) or let it run every Saturday.
+# Needs NO secrets. The repo must be PUBLIC so the image links work.
+name: plan-week
+on:
+  schedule:
+    - cron: "0 6 * * 6"
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "First day (YYYY-MM-DD), empty = tomorrow"
+        required: false
+        default: ""
+      days:
+        description: "Number of days"
+        required: false
+        default: "7"
+      categories:
+        description: "Folders, comma separated (empty = plan_config.yaml)"
+        required: false
+        default: ""
+permissions:
+  contents: write
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Render posts and stories
+        run: python plan.py --start "${{ github.event.inputs.start }}" --days "${{ github.event.inputs.days || '7' }}" --categories "${{ github.event.inputs.categories }}"
+      - name: Commit media
+        run: |
+          git config user.name "plan-bot"
+          git config user.email "plan-bot@users.noreply.github.com"
+          git add media
+          git diff --cached --quiet || git commit -m "plan: posts and stories"
+          git push
