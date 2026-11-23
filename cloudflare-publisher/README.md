@@ -39,12 +39,17 @@ Set `PUBLIC_MEDIA_BASE_URL` as a Worker variable or secret if required by your d
 
 ## Deploy
 
+Use the Cloudflare account that will host the Worker. The GitHub source is ready, but it is not deployed until these account-side resources and secrets are configured.
+
 ```bash
 cd cloudflare-publisher
 npx wrangler d1 create truck-part-publisher
 # Copy the returned database_id into wrangler.toml
 npx wrangler d1 execute truck-part-publisher --remote --file=schema.sql
 npx wrangler r2 bucket create truck-part-publisher-media
+# In Cloudflare R2, attach a public custom domain to this bucket.
+# Then set the matching public origin:
+npx wrangler secret put PUBLIC_MEDIA_BASE_URL
 npx wrangler secret put META_APP_ID
 npx wrangler secret put META_APP_SECRET
 npx wrangler secret put META_REDIRECT_URI
@@ -54,6 +59,10 @@ openssl rand -base64 32
 npx wrangler secret put TOKEN_ENCRYPTION_KEY
 npx wrangler deploy
 ```
+
+## Meta app configuration
+
+In Meta for Developers, create an app with the Instagram product / Instagram Login. Add the exact redirect URI from `META_REDIRECT_URI` to the app's valid OAuth redirect URIs. For this Worker it is `https://YOUR-WORKER.workers.dev/oauth/callback`. The app needs Instagram Business Login and the `instagram_business_basic` and `instagram_business_content_publish` permissions. Meta may require App Review / Advanced Access before accounts outside the app's roles can authorize it.
 
 ## Safe first launch
 
