@@ -10,7 +10,7 @@ Standalone Instagram Business publisher for Truck Part Trading. It does not use 
 - Random media selection from the approved media archive
 - Product-level no-repeat rule for the previous seven days
 - Publishes one feed item (photo or Reel) and one Story per slot
-- R2 media upload, D1 history, pause/resume and manual test controls
+- Direct use of public product media URLs from the existing WordPress archive, D1 history, pause/resume and manual test controls
 
 ## Important setup requirements
 
@@ -34,7 +34,6 @@ Set these with Wrangler (never commit them):
 - `ADMIN_KEY` (strong random password)
 - `TOKEN_ENCRYPTION_KEY` (base64-encoded 32 random bytes)
 
-Set `PUBLIC_MEDIA_BASE_URL` as a Worker variable or secret if required by your deployment policy.
 
 ## Deploy
 
@@ -61,7 +60,7 @@ In Meta for Developers, create an app with the Instagram product / Instagram Log
 
 ## Safe first launch
 
-The database defaults to `enabled=false`. Connect Instagram, upload a small test image, verify the public media URL, then use **آزمایش انتشار همین حالا**. Only activate the schedule after a successful test.
+The database defaults to `enabled=false`. Connect Instagram, add a small test image URL from the approved website archive, verify that it is publicly reachable, then use **آزمایش انتشار همین حالا**. Only activate the schedule after a successful test.
 
 ## Scheduling
 
