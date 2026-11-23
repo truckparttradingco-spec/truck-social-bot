@@ -49,6 +49,8 @@ npx wrangler secret put META_APP_ID
 npx wrangler secret put META_APP_SECRET
 npx wrangler secret put META_REDIRECT_URI
 npx wrangler secret put ADMIN_KEY
+openssl rand -base64 32
+# Use the output as TOKEN_ENCRYPTION_KEY:
 npx wrangler secret put TOKEN_ENCRYPTION_KEY
 npx wrangler deploy
 ```
