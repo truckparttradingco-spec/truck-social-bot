@@ -21,7 +21,7 @@ const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json; charset=utf-8" } });
 
 const nowIso = () => new Date().toISOString();
-const apiVersion = (env: Env) => env.META_API_VERSION || "v26.0";
+const apiVersion = (env: Env) => env.META_API_VERSION || "v27.0";
 const graphBase = (env: Env) => `https://graph.instagram.com/${apiVersion(env)}`;
 
 function corsHeaders() {
