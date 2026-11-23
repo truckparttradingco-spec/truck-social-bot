@@ -1,12 +1,10 @@
 export interface Env {
   DB: D1Database;
-  MEDIA: R2Bucket;
   META_APP_ID: string;
   META_APP_SECRET: string;
   META_REDIRECT_URI: string;
   ADMIN_KEY: string;
   TOKEN_ENCRYPTION_KEY: string;
-  PUBLIC_MEDIA_BASE_URL: string;
   META_API_VERSION?: string;
   APP_TIMEZONE?: string;
   POSTING_SLOTS?: string;
@@ -78,31 +76,17 @@ async function adminRoute(req: Request, env: Env, url: URL): Promise<Response> {
   if (url.pathname === "/api/media" && req.method === "POST") {
     const body = await req.json() as { product_id?: string; title?: string; media_type?: string; media_url?: string };
     if (!body.product_id || !body.title || !body.media_url || !/^https:\/\//i.test(body.media_url)) return json({ error: "product_id, title and public https media_url are required" }, 400);
+    let mediaUrl: URL;
+    try { mediaUrl = new URL(body.media_url); } catch { return json({ error: "Invalid media URL" }, 400); }
+    if (!["truckparttrading.com", "www.truckparttrading.com"].includes(mediaUrl.hostname) ||
+        !mediaUrl.pathname.includes("/wp-content/uploads/truckpart-archive/")) {
+      return json({ error: "Only files from the approved Truck Part Trading archive are allowed" }, 400);
+    }
     if (body.media_type !== "IMAGE" && body.media_type !== "VIDEO") return json({ error: "media_type must be IMAGE or VIDEO" }, 400);
     const id = crypto.randomUUID();
     await env.DB.prepare("INSERT INTO media(id,product_id,title,media_type,media_url,created_at) VALUES(?,?,?,?,?,?)")
       .bind(id, body.product_id.trim(), body.title.trim(), body.media_type, body.media_url, nowIso()).run();
     return json({ ok: true, id });
-  }
-
-  if (url.pathname === "/api/upload" && req.method === "POST") {
-    if (!env.PUBLIC_MEDIA_BASE_URL) return json({ error: "Set PUBLIC_MEDIA_BASE_URL to the public R2 custom domain first" }, 400);
-    const form = await req.formData();
-    const file = form.get("file");
-    const productId = String(form.get("product_id") || "").trim();
-    const title = String(form.get("title") || "").trim();
-    if (!(file instanceof File) || !productId || !title) return json({ error: "file, product_id and title are required" }, 400);
-    if (file.size > 100 * 1024 * 1024) return json({ error: "Maximum upload size is 100 MB" }, 413);
-    const type = file.type.startsWith("image/") ? "IMAGE" : file.type.startsWith("video/") ? "VIDEO" : null;
-    if (!type) return json({ error: "Only image and video files are supported" }, 400);
-    const ext = (file.name.split(".").pop() || (type === "IMAGE" ? "jpg" : "mp4")).replace(/[^a-z0-9]/gi, "").toLowerCase();
-    const key = `media/${crypto.randomUUID()}.${ext}`;
-    await env.MEDIA.put(key, file.stream(), { httpMetadata: { contentType: file.type } });
-    const mediaUrl = `${env.PUBLIC_MEDIA_BASE_URL.replace(/\/$/, "")}/${key}`;
-    const id = crypto.randomUUID();
-    await env.DB.prepare("INSERT INTO media(id,product_id,title,media_type,media_url,created_at) VALUES(?,?,?,?,?,?)")
-      .bind(id, productId, title, type, mediaUrl, nowIso()).run();
-    return json({ ok: true, id, media_url: mediaUrl });
   }
 
   if (url.pathname.startsWith("/api/media/") && req.method === "DELETE") {
@@ -348,8 +332,10 @@ small,.muted{color:#aab8cc}.ok{color:#4ade80}.bad{color:#fca5a5}
 <section class="card"><h3>۲) اتصال اینستاگرام</h3><p>اتصال رسمی و امن از طریق Meta OAuth</p><button onclick="connect()">اتصال با اینستاگرام</button></section>
 <section class="card"><h3>۳) زمان‌بندی</h3><p>هر روز ساعت ۱۰:۰۰، ۱۴:۰۰ و ۱۷:۰۰ به وقت تنظیم‌شده</p><div id="status" class="muted">وضعیت نامشخص</div>
 <button onclick="setEnabled(true)">فعال‌سازی انتشار</button><button onclick="setEnabled(false)" style="background:#9f3030">توقف انتشار</button><button onclick="runNow()">آزمایش انتشار همین حالا</button></section>
-<section class="card"><h3>۴) افزودن عکس یا ویدئوی محصول</h3><div class="grid"><label>کد محصول<input id="product" placeholder="مثلاً 220149/10"></label><label>عنوان محصول<input id="title" placeholder="نام محصول و برند"></label></div>
-<input id="file" type="file" accept="image/*,video/*"><button onclick="upload()">آپلود به آرشیو برنامه</button><p class="muted">فایل‌ها در R2 ذخیره می‌شوند. برای انتشار اینستاگرام باید آدرس عمومی R2 فعال باشد.</p></section>
+<section class="card"><h3>۴) افزودن عکس یا ویدئوی محصول از آرشیو سایت</h3><div class="grid"><label>کد محصول<input id="product" placeholder="مثلاً 220149/10"></label><label>عنوان محصول<input id="title" placeholder="نام محصول و برند"></label></div>
+<label>آدرس عمومی فایل در آرشیو سایت<input id="mediaUrl" type="url" placeholder="https://truckparttrading.com/wp-content/uploads/truckpart-archive/..."></label>
+<label>نوع فایل<select id="mediaType"><option value="IMAGE">عکس</option><option value="VIDEO">ویدئو</option></select></label>
+<button onclick="addMedia()">افزودن به صف انتشار</button><p class="muted">فایل روی هاست فعلی سایت باقی می‌ماند؛ برنامه فقط نشانی عمومی آن را در D1 ذخیره می‌کند. فقط مسیر آرشیو تأییدشده پذیرفته می‌شود.</p></section>
 <section class="card"><h3>آرشیو محتوا</h3><div id="media"></div></section>
 <section class="card"><h3>گزارش آخرین انتشارها</h3><div id="logs"></div></section>
 </main><script>
@@ -359,7 +345,7 @@ async function api(path,method="GET",body){const r=await fetch(path,{method,head
 async function connect(){try{const d=await api("/api/oauth/start","POST",{});location.href=d.url}catch(e){alert(e.message)}}
 async function loadState(){sessionStorage.setItem("adminKey",$("key").value||key());try{const d=await api("/api/state");$("account").innerHTML=d.account?"متصل: @"+d.account.username:"هنوز حسابی متصل نشده";$("status").innerHTML=d.enabled?'<b class="ok">انتشار خودکار فعال است</b>':'<b class="bad">انتشار متوقف است</b>'; $("media").innerHTML=(d.media||[]).map(m=>'<div class="item">'+m.title+' — '+m.product_id+' ('+m.media_type+') <button onclick="removeMedia(\''+m.id+'\')">حذف از صف</button></div>').join("")||"هنوز محتوایی اضافه نشده";$("logs").innerHTML=(d.logs||[]).map(x=>'<div class="item">'+x.product_id+' — پست: '+x.feed_status+' — استوری: '+x.story_status+' — '+x.published_at+(x.error?' — '+x.error:'')+'</div>').join("")||"سابقه‌ای وجود ندارد"}catch(e){$("account").textContent=e.message}}
 async function setEnabled(v){try{await api("/api/settings","POST",{enabled:v});await loadState()}catch(e){alert(e.message)}}
-async function upload(){try{const f=$("file").files[0];if(!f)throw Error("ابتدا فایل را انتخاب کنید");const data=new FormData();data.set("file",f);data.set("product_id",$("product").value);data.set("title",$("title").value);await api("/api/upload","POST",data);$("file").value="";await loadState();alert("فایل اضافه شد")}catch(e){alert(e.message)}}
+async function addMedia(){try{await api("/api/media","POST",{product_id:$("product").value,title:$("title").value,media_url:$("mediaUrl").value,media_type:$("mediaType").value});$("mediaUrl").value="";await loadState();alert("رسانه به صف انتشار اضافه شد")}catch(e){alert(e.message)}}
 async function removeMedia(id){try{await api("/api/media/"+id,"DELETE");await loadState()}catch(e){alert(e.message)}}
 async function runNow(){if(!confirm("یک پست و استوری واقعی منتشر شود؟"))return;try{const r=await api("/api/run-now","POST",{});alert(JSON.stringify(r));await loadState()}catch(e){alert(e.message)}}
 if(new URLSearchParams(location.search).has("connected"))history.replaceState({},"", "/");
