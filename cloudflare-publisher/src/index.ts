@@ -107,7 +107,7 @@ async function adminRoute(req: Request, env: Env, url: URL): Promise<Response> {
   }
 
   if (url.pathname === "/api/run-now" && req.method === "POST") {
-    const result = await runSlot(env, "manual-" + new Date().toISOString().replace(/[:.]/g, "-"));
+    const result = await runSlot(env, "manual-" + new Date().toISOString().replace(/[:.]/g, "-"), true);
     return json(result);
   }
 
@@ -231,9 +231,9 @@ function localParts(date: Date, timezone: string) {
   return { date: `${v.year}-${v.month}-${v.day}`, time: `${v.hour}:${v.minute}` };
 }
 
-async function runSlot(env: Env, slotKey: string) {
+async function runSlot(env: Env, slotKey: string, force = false) {
   const enabled = await env.DB.prepare("SELECT value FROM settings WHERE key='enabled'").first<{value:string}>();
-  if (enabled?.value !== "true") return { skipped: true, reason: "Publishing is paused" };
+  if (!force && enabled?.value !== "true") return { skipped: true, reason: "Publishing is paused" };
 
   const account = await env.DB.prepare("SELECT ig_user_id, encrypted_token FROM instagram_account WHERE id=1").first<{ig_user_id:string;encrypted_token:string}>();
   if (!account) return { skipped: true, reason: "Instagram account is not connected" };
@@ -252,7 +252,7 @@ async function runSlot(env: Env, slotKey: string) {
     const candidates = await env.DB.prepare(`SELECT m.id,m.product_id,m.title,m.media_type,m.media_url
       FROM media m WHERE m.enabled=1 AND NOT EXISTS (
         SELECT 1 FROM publish_log p WHERE p.product_id=m.product_id
-        AND p.published_at >= datetime('now','-7 days')
+        AND julianday(p.published_at) >= julianday('now','-7 days')
       )`).all<MediaRow>();
     const rows = candidates.results || [];
     if (!rows.length) throw new Error("No eligible media: add new products or wait until the 7-day repeat window expires");
