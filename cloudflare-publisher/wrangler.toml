@@ -12,9 +12,5 @@ binding = "DB"
 database_name = "truck-part-publisher"
 database_id = "cce7ae34-ef14-4950-a69a-3f27ad4249d6"
 
-[[r2_buckets]]
-binding = "MEDIA"
-bucket_name = "truck-part-publisher-media"
-
 [triggers]
 crons = ["* * * * *"]
