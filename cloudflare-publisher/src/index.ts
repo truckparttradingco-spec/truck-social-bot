@@ -55,6 +55,11 @@ function isAdmin(req: Request, env: Env) {
 async function adminRoute(req: Request, env: Env, url: URL): Promise<Response> {
   if (!isAdmin(req, env)) return json({ error: "unauthorized" }, 401);
 
+  if (url.pathname === "/api/oauth/start" && req.method === "POST") {
+    const authUrl = await oauthStart(url, env);
+    return json({ url: authUrl });
+  }
+
   if (url.pathname === "/api/state" && req.method === "GET") {
     const account = await env.DB.prepare("SELECT ig_user_id, username, connected_at, token_expires_at FROM instagram_account WHERE id=1").first();
     const enabled = await env.DB.prepare("SELECT value FROM settings WHERE key='enabled'").first<{value:string}>();
@@ -165,7 +170,7 @@ async function oauthCallback(url: URL, env: Env): Promise<Response> {
   }
 }
 
-async function oauthStart(url: URL, env: Env): Promise<Response> {
+async function oauthStart(url: URL, env: Env): Promise<string> {
   const state = crypto.randomUUID() + crypto.randomUUID();
   await env.DB.prepare("INSERT INTO oauth_states(state,created_at,expires_at) VALUES(?,?,?)")
     .bind(state, nowIso(), new Date(Date.now() + 10 * 60 * 1000).toISOString()).run();
@@ -175,7 +180,7 @@ async function oauthStart(url: URL, env: Env): Promise<Response> {
   auth.searchParams.set("response_type", "code");
   auth.searchParams.set("scope", "instagram_business_basic,instagram_business_content_publish");
   auth.searchParams.set("state", state);
-  return Response.redirect(auth.toString(), 302);
+  return auth.toString();
 }
 
 async function graphPost(env: Env, path: string, values: Record<string, string>) {
@@ -221,6 +226,24 @@ async function publishOne(env: Env, igUserId: string, token: string, media: Medi
   return String(published.id || "");
 }
 
+async function getUsableToken(env: Env, encryptedToken: string): Promise<string> {
+  let token = await decryptToken(encryptedToken, env.TOKEN_ENCRYPTION_KEY);
+  const row = await env.DB.prepare("SELECT token_expires_at FROM instagram_account WHERE id=1").first<{token_expires_at:string}>();
+  if (row?.token_expires_at && new Date(row.token_expires_at).getTime() - Date.now() < 7 * 24 * 60 * 60 * 1000) {
+    const u = new URL("https://graph.instagram.com/refresh_access_token");
+    u.searchParams.set("grant_type", "ig_refresh_token");
+    u.searchParams.set("access_token", token);
+    const r = await fetch(u);
+    const d = await r.json() as any;
+    if (!r.ok || !d.access_token) throw new Error(d.error?.message || "Instagram token refresh failed; reconnect the account");
+    token = d.access_token;
+    const encrypted = await encryptToken(token, env.TOKEN_ENCRYPTION_KEY);
+    const expiry = new Date(Date.now() + Number(d.expires_in || 5184000) * 1000).toISOString();
+    await env.DB.prepare("UPDATE instagram_account SET encrypted_token=?,token_expires_at=? WHERE id=1").bind(encrypted, expiry).run();
+  }
+  return token;
+}
+
 function captionFor(media: MediaRow) {
   return `🚛 ${media.title}\n\nTruck & Trailer Parts\nQuality parts for heavy-duty vehicles.\n\nProduct code: ${media.product_id}\n\nMore information: https://truckparttrading.com\n\n#TruckParts #TruckAndTrailer #HeavyDuty #Bearings #TruckPartTrading`;
 }
@@ -257,7 +280,7 @@ async function runSlot(env: Env, slotKey: string, force = false) {
     const rows = candidates.results || [];
     if (!rows.length) throw new Error("No eligible media: add new products or wait until the 7-day repeat window expires");
     media = rows[Math.floor(Math.random() * rows.length)];
-    const token = await decryptToken(account.encrypted_token, env.TOKEN_ENCRYPTION_KEY);
+    const token = await getUsableToken(env, account.encrypted_token);
     const caption = captionFor(media);
     feedId = await publishOne(env, account.ig_user_id, token, media, caption, false);
     feedStatus = "published";
@@ -289,7 +312,6 @@ export default {
     const url = new URL(req.url);
     if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders() });
     try {
-      if (url.pathname === "/oauth/start" && req.method === "GET") return await oauthStart(url, env);
       if (url.pathname === "/oauth/callback" && req.method === "GET") return await oauthCallback(url, env);
       if (url.pathname.startsWith("/api/")) {
         const response = await adminRoute(req, env, url);
@@ -334,7 +356,7 @@ small,.muted{color:#aab8cc}.ok{color:#4ade80}.bad{color:#fca5a5}
 const $=id=>document.getElementById(id);
 const key=()=>sessionStorage.getItem("adminKey")||"";
 async function api(path,method="GET",body){const r=await fetch(path,{method,headers:{"x-admin-key":key(),...(body instanceof FormData?{}:{"content-type":"application/json"})},body:body?(body instanceof FormData?body:JSON.stringify(body)):undefined});const d=await r.json();if(!r.ok)throw Error(d.error||"خطا");return d}
-function connect(){location.href="/oauth/start"}
+async function connect(){try{const d=await api("/api/oauth/start","POST",{});location.href=d.url}catch(e){alert(e.message)}}
 async function loadState(){sessionStorage.setItem("adminKey",$("key").value||key());try{const d=await api("/api/state");$("account").innerHTML=d.account?"متصل: @"+d.account.username:"هنوز حسابی متصل نشده";$("status").innerHTML=d.enabled?'<b class="ok">انتشار خودکار فعال است</b>':'<b class="bad">انتشار متوقف است</b>'; $("media").innerHTML=(d.media||[]).map(m=>'<div class="item">'+m.title+' — '+m.product_id+' ('+m.media_type+') <button onclick="removeMedia(\''+m.id+'\')">حذف از صف</button></div>').join("")||"هنوز محتوایی اضافه نشده";$("logs").innerHTML=(d.logs||[]).map(x=>'<div class="item">'+x.product_id+' — پست: '+x.feed_status+' — استوری: '+x.story_status+' — '+x.published_at+(x.error?' — '+x.error:'')+'</div>').join("")||"سابقه‌ای وجود ندارد"}catch(e){$("account").textContent=e.message}}
 async function setEnabled(v){try{await api("/api/settings","POST",{enabled:v});await loadState()}catch(e){alert(e.message)}}
 async function upload(){try{const f=$("file").files[0];if(!f)throw Error("ابتدا فایل را انتخاب کنید");const data=new FormData();data.set("file",f);data.set("product_id",$("product").value);data.set("title",$("title").value);await api("/api/upload","POST",data);$("file").value="";await loadState();alert("فایل اضافه شد")}catch(e){alert(e.message)}}
