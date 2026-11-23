@@ -10,7 +10,7 @@ POSTING_SLOTS = "10:00,14:00,17:00"
 [[d1_databases]]
 binding = "DB"
 database_name = "truck-part-publisher"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "cce7ae34-ef14-4950-a69a-3f27ad4249d6"
 
 [[r2_buckets]]
 binding = "MEDIA"
