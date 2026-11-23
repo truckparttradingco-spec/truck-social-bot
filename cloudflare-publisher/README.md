@@ -22,8 +22,7 @@ Standalone Instagram Business publisher for Truck Part Trading. It does not use 
    - `instagram_business_content_publish`
 4. For an app used only by its own app-role/tester accounts, complete the required app-role setup. Public use by other accounts may require Meta App Review / Advanced Access.
 5. Create a Cloudflare D1 database named `truck-part-publisher` and apply `schema.sql`.
-6. Create an R2 bucket named `truck-part-publisher-media`. Attach a public custom domain to the bucket and set `PUBLIC_MEDIA_BASE_URL` to that origin. Instagram must be able to fetch media over HTTPS.
-7. Replace the placeholder `database_id` in `wrangler.toml`.
+6. Keep product photos and videos on the existing website host under `/wp-content/uploads/truckpart-archive/`. The Worker stores only their public HTTPS URLs in D1; no R2 bucket or separate storage payment is required.
 
 ## Worker secrets
 
@@ -46,10 +45,6 @@ cd cloudflare-publisher
 npx wrangler d1 create truck-part-publisher
 # Copy the returned database_id into wrangler.toml
 npx wrangler d1 execute truck-part-publisher --remote --file=schema.sql
-npx wrangler r2 bucket create truck-part-publisher-media
-# In Cloudflare R2, attach a public custom domain to this bucket.
-# Then set the matching public origin:
-npx wrangler secret put PUBLIC_MEDIA_BASE_URL
 npx wrangler secret put META_APP_ID
 npx wrangler secret put META_APP_SECRET
 npx wrangler secret put META_REDIRECT_URI
@@ -76,6 +71,6 @@ Default timezone is `Asia/Tehran` and slots are `10:00,14:00,17:00`. Cloudflare 
 
 - One Instagram Business account per deployment.
 - Each scheduled slot publishes a feed item and then a Story using the same product media.
-- Initial media must be uploaded through the dashboard. A later adapter can import the website archive manifest from `truckparttrading.com`.
+- Media URLs must point to public HTTPS files under `truckparttrading.com/wp-content/uploads/truckpart-archive/`. The Worker does not copy or rehost these files.
 - The Worker does not generate product claims; the title and product code are supplied with each media item.
-- Instagram API access, app review, token health, public media hosting and Cloudflare resource creation must be completed before live publishing.
+- Instagram API access, app review, token health, public media URL reachability and Cloudflare resource creation must be completed before live publishing.
