@@ -3,7 +3,7 @@ main = "src/index.ts"
 compatibility_date = "2026-11-23"
 
 [vars]
-META_API_VERSION = "v26.0"
+META_API_VERSION = "v27.0"
 APP_TIMEZONE = "Asia/Tehran"
 POSTING_SLOTS = "10:00,14:00,17:00"
 
