@@ -1,42 +1,187 @@
-# Renders Instagram posts + stories (random times) into media/ and commits them.
-# Run it by hand (Actions -> plan-week -> Run workflow) or let it run every Saturday.
-# Needs NO secrets. The repo must be PUBLIC so the image links work.
-name: plan-week
-on:
-  schedule:
-    - cron: "0 6 * * 6"
-  workflow_dispatch:
-    inputs:
-      start:
-        description: "First day (YYYY-MM-DD), empty = tomorrow"
-        required: false
-        default: ""
-      days:
-        description: "Number of days"
-        required: false
-        default: "7"
-      categories:
-        description: "Folders, comma separated (empty = plan_config.yaml)"
-        required: false
-        default: ""
-permissions:
-  contents: write
-jobs:
-  plan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: pip
-      - run: pip install -r requirements.txt
-      - name: Render posts and stories
-        run: python plan.py --start "${{ github.event.inputs.start }}" --days "${{ github.event.inputs.days || '7' }}" --categories "${{ github.event.inputs.categories }}"
-      - name: Commit media
-        run: |
-          git config user.name "plan-bot"
-          git config user.email "plan-bot@users.noreply.github.com"
-          git add media
-          git diff --cached --quiet || git commit -m "plan: posts and stories"
-          git push
+diff --git a/.github/workflows/plan-week.yml b/.github/workflows/plan-week.yml
+index 11e745b..0a2c1cf 100644
+--- a/.github/workflows/plan-week.yml
++++ b/.github/workflows/plan-week.yml
+@@ -1,4 +1,6 @@
+-# Renders Instagram posts + stories (random times) into media/ and commits them.
++# Renders Instagram posts + stories into media/ and commits them.
++# Times, the post/story pattern and the categories come from plan_config.yaml
++# (every post at 10:30, every story at 10:58 Tehran; days 1-10 post, 11-20 story, 21-end both).
+ # Run it by hand (Actions -> plan-week -> Run workflow) or let it run every Saturday.
+ # Needs NO secrets. The repo must be PUBLIC so the image links work.
+ name: plan-week
+@@ -12,18 +14,22 @@ on:
+         required: false
+         default: ""
+       days:
+-        description: "Number of days"
++        description: "Number of days (31 = one month)"
+         required: false
+         default: "7"
+       categories:
+-        description: "Folders, comma separated (empty = plan_config.yaml)"
++        description: "Categories, comma separated (empty = plan_config.yaml)"
+         required: false
+         default: ""
+ permissions:
+   contents: write
++concurrency:
++  group: plan-week
++  cancel-in-progress: false
+ jobs:
+   plan:
+     runs-on: ubuntu-latest
++    timeout-minutes: 30
+     steps:
+       - uses: actions/checkout@v4
+       - uses: actions/setup-python@v5
+@@ -32,11 +38,17 @@ jobs:
+           cache: pip
+       - run: pip install -r requirements.txt
+       - name: Render posts and stories
+-        run: python plan.py --start "${{ github.event.inputs.start }}" --days "${{ github.event.inputs.days || '7' }}" --categories "${{ github.event.inputs.categories }}"
++        env:
++          START: ${{ github.event.inputs.start }}
++          DAYS: ${{ github.event.inputs.days }}
++          CATEGORIES: ${{ github.event.inputs.categories }}
++        run: python plan.py --start "$START" --days "${DAYS:-7}" --categories "$CATEGORIES"
+       - name: Commit media
+         run: |
+           git config user.name "plan-bot"
+           git config user.email "plan-bot@users.noreply.github.com"
+           git add media
+-          git diff --cached --quiet || git commit -m "plan: posts and stories"
+-          git push
++          git diff --cached --quiet && { echo "nothing to commit"; exit 0; }
++          git commit -m "plan: posts and stories"
++          git pull --rebase origin "${GITHUB_REF_NAME}"
++          git push origin "HEAD:${GITHUB_REF_NAME}"
+diff --git a/config.yaml b/config.yaml
+index 307a088..540d5d5 100644
+--- a/config.yaml
++++ b/config.yaml
+@@ -14,7 +14,7 @@ brand:
+   phone: "021-55282160-61"
+   whatsapp: "09120745582"        # شماره‌ها را از روی قالب‌هایتان برداشته‌ام؛ اصلاح کنید
+   email: ""
+-  instagram: "@export.truckpart"
++  instagram: "@soufian_trailer"
+   # لوگو (اختیاری): فایل PNG شفاف را اینجا بگذارید. اگر نباشد، حروف اول اسم برند ساخته می‌شود.
+   logo: "assets/logo.png"
+ 
+diff --git a/plan_config.yaml b/plan_config.yaml
+index 69d59da..81e7f26 100644
+--- a/plan_config.yaml
++++ b/plan_config.yaml
+@@ -3,11 +3,13 @@ captions:
+   language: fa
+ planner:
+   timezone: Asia/Tehran
+-  windows: [["09:30", "12:30"], ["17:00", "21:30"]]   # one post per window
+-  posts_per_day: [1, 2]                                # random 1 or 2 posts per day
+-  story_delay_minutes: [25, 90]                        # story goes out this long after its post
+-  min_fill: 0.75                                       # only products whose poster has >= 75% of its data cells
+-  categories: [seal, bearing, shock, suspension]       # oil seals, bearings, shock absorbers, cab suspension
++  fixed_post_time: "10:30"            # every post at 10:30 (Tehran)
++  fixed_story_time: "10:58"           # every story at 10:58
++  # by day of the month: 1-10 post only, 11-20 story only, 21-end post + story (exactly one item per day)
++  day_pattern: [[1, 10, "post"], [11, 20, "story"], [21, 31, "both"]]
++  min_fill: 0.75                      # only products whose poster has >= 75% of its data cells
++  categories: [seal, bearing, shock, suspension, abs, adj, bolt, disc, kaan, sensor, carrier]
++  focus_categories: [seal, bearing, shock, suspension]   # these four come up twice as often
+ 
+ # products/<folder> -> category used in config.yaml (the repo's folders are named like the Excel sheets)
+ folders:
+diff --git a/tsb/planner.py b/tsb/planner.py
+index 8aea93d..076d723 100644
+--- a/tsb/planner.py
++++ b/tsb/planner.py
+@@ -42,6 +42,16 @@ def plan(cfg: dict, start: date, days: int, out_dir: Path | None = None, keep_da
+     per_day = pl.get("posts_per_day", [1, 2])
+     s_lo, s_hi = pl.get("story_delay_minutes", [25, 90])
+     categories = categories or pl.get("categories")
++    fixed_post = pl.get("fixed_post_time")           # e.g. "10:30" -> every post at this time (overrides windows)
++    fixed_story = pl.get("fixed_story_time")         # e.g. "10:58"
++    pattern = pl.get("day_pattern")                  # e.g. [[1, 10, "post"], [11, 20, "story"], [21, 31, "both"]] by day of month
++    focus = pl.get("focus_categories", [])           # these categories come up twice per rotation
++
++    def kind_for(day: date) -> str:
++        for a, b, k in pattern or []:
++            if int(a) <= day.day <= int(b):
++                return k
++        return "both"
+     out_dir = out_dir or ROOT / "media"
+     out_dir.mkdir(parents=True, exist_ok=True)
+     used_path = out_dir / "used.json"
+@@ -63,15 +73,20 @@ def plan(cfg: dict, start: date, days: int, out_dir: Path | None = None, keep_da
+     if not cats:
+         raise SystemExit("No products with data/template for categories: %s" % categories)
+     rng.shuffle(cats)
++    cats = cats + [c for c in focus if c in by_cat]
+ 
+     rows: list[dict] = []
+     n = 0
+     tmp = out_dir / "_tmp"
+     for d in range(days):
+         day = start + timedelta(days=d)
+-        count = rng.choice(per_day) if isinstance(per_day, list) else int(per_day)
+-        wins = list(windows) if count >= len(windows) else rng.sample(windows, count)
+-        wins.sort()
++        kind = kind_for(day)
++        if pattern or fixed_post:
++            count, wins = 1, [(0, 0)]               # exactly one item per day
++        else:
++            count = rng.choice(per_day) if isinstance(per_day, list) else int(per_day)
++            wins = list(windows) if count >= len(windows) else rng.sample(windows, count)
++            wins.sort()
+         for lo, hi in wins[:count]:
+             cat = cats[n % len(cats)]
+             fresh = [p for p in by_cat[cat] if p.key not in used and data.norm(p.code) not in used_codes]
+@@ -80,27 +95,36 @@ def plan(cfg: dict, start: date, days: int, out_dir: Path | None = None, keep_da
+             prod = rng.choice(fresh)
+             used.append(prod.key)
+             used_codes.add(data.norm(prod.code))
+-            minute = rng.randrange(lo, hi)
+-            if minute % 5 == 0:
+-                minute += rng.randrange(1, 5)       # never exactly on a round minute
++            if fixed_post:
++                minute = _hm(fixed_post)
++            else:
++                minute = rng.randrange(lo, hi)
++                if minute % 5 == 0:
++                    minute += rng.randrange(1, 5)   # never exactly on a round minute
+             hh, mm = divmod(minute, 60)
+             post_dt = datetime(day.year, day.month, day.day, hh, mm, tzinfo=tz)
+-            story_dt = post_dt + timedelta(minutes=rng.randrange(s_lo, s_hi))
+-            if story_dt.date() != post_dt.date():
+-                story_dt = post_dt.replace(hour=23, minute=40)
++            if fixed_story:
++                sh, sm = divmod(_hm(fixed_story), 60)
++                story_dt = datetime(day.year, day.month, day.day, sh, sm, tzinfo=tz)
++            else:
++                story_dt = post_dt + timedelta(minutes=rng.randrange(s_lo, s_hi))
++                if story_dt.date() != post_dt.date():
++                    story_dt = post_dt.replace(hour=23, minute=40)
+             a = bot.make_assets(cfg, prod, n, tmp)
+             ddir = out_dir / day.isoformat()
+             ddir.mkdir(parents=True, exist_ok=True)
+             stem = f"{hh:02d}{mm:02d}_{prod.category}_{prod.code.replace(' ', '-')}"
+-            shutil.copy(a["post"], ddir / f"{stem}.jpg")
+-            shutil.copy(a["story"], ddir / f"{stem}_story.jpg")
++            if kind in ("post", "both"):
++                shutil.copy(a["post"], ddir / f"{stem}.jpg")
++            if kind in ("story", "both"):
++                shutil.copy(a["story"], ddir / f"{stem}_story.jpg")
+             rows.append({
+                 "n": n + 1, "date": day.isoformat(), "time": post_dt.strftime("%H:%M"),
+                 "timezone": pl.get("timezone", "UTC"), "datetime": post_dt.isoformat(),
+-                "story_datetime": story_dt.isoformat(),
++                "story_datetime": story_dt.isoformat(), "kind": kind,
+                 "product": prod.key, "template": a["template"] or "auto",
+-                "image": f"media/{day.isoformat()}/{stem}.jpg",
+-                "story_image": f"media/{day.isoformat()}/{stem}_story.jpg",
++                "image": f"media/{day.isoformat()}/{stem}.jpg" if kind in ("post", "both") else "",
++                "story_image": f"media/{day.isoformat()}/{stem}_story.jpg" if kind in ("story", "both") else "",
+                 "caption": captions_fa.build_fa(cfg, prod.category, prod.code, rng)["instagram"],
+             })
+             n += 1
